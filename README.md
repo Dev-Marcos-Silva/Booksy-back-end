@@ -21,7 +21,7 @@ Sistema de Gerenciamento de Biblioteca
 - [ ] Deve ser possível visualizar sugestões de livros mais avaliados
 - [ ] Deve ser possível visualizar sugestões de livros recém adicionados
 - [ ] Deve ser possível atualizar as informações de um perfil de usuário
-- [ ] Deve ser possível atualizar a foto de perfil de usuário
+- [ ] Deve ser possível atualizar a foto de perfil do usuário
 - [ ] Deve ser possível cadastrar uma biblioteca
 - [ ] Deve ser possível se autenticar pelo email de cadastro da biblioteca
 - [ ] Deve ser possível cadastrar um livro
@@ -57,8 +57,8 @@ Sistema de Gerenciamento de Biblioteca
 ## RNFs ( Requisitos não-funcionais )
 
 - [ ] Utilizar React + Tailwind no Front-end
-- [ ] Utilizar Node + TypeScripe + Fastify no Back-end
-- [ ] Utilizar Bcryot para hash de senha dos usuários
+- [ ] Utilizar Node + TypeScript + Fastify no Back-end
+- [ ] Utilizar Bcrypt para hash de senha dos usuários
 - [ ] Utilizar o Zod para tipagem de dados
 - [ ] Utilizar Docker + PostgreSQL como Banco de dados
 - [ ] Utilizar PrismaORM para manipular o Banco de dados
