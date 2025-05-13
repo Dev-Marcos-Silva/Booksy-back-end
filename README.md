@@ -4,7 +4,7 @@ Sistema de Gerenciamento de Biblioteca
 
 ## RFs ( Requisitos funcionais )
 
-- [ ] Deve ser possível se cadastrar 
+- [ ] Deve ser possível se cadastrar
 - [ ] Deve ser possível se autenticar
 - [ ] Deve ser possível pesquisa por um livro(titulo ou nome do autor)
 - [ ] Deve ser possível obter as informações do livro
@@ -20,8 +20,8 @@ Sistema de Gerenciamento de Biblioteca
 - [ ] Deve ser possível excluir o histórico de livros
 - [ ] Deve ser possível visualizar sugestões de livros mais avaliados
 - [ ] Deve ser possível visualizar sugestões de livros recém adicionados
-- [ ] Deve ser possível atualizar o perfil de usuário
-
+- [ ] Deve ser possível atualizar as informações de um perfil de usuário
+- [ ] Deve ser possível atualizar a foto de perfil de usuário
 - [ ] Deve ser possível cadastrar uma biblioteca
 - [ ] Deve ser possível se autenticar pelo email de cadastro da biblioteca
 - [ ] Deve ser possível cadastrar um livro
@@ -42,7 +42,9 @@ Sistema de Gerenciamento de Biblioteca
 - [ ] Deve ser possível visualizar os livros não entregues
 - [ ] Deve ser possível visualizar a quantidade de livros não entregues
 - [ ] Deve ser possível confirmar a conclusão de um livro não entregue
-- [ ] Deve ser possível atualizar o perfil da biblioteca
+- [ ] Deve ser possível atualizar as informações de um perfil da biblioteca
+- [ ] Deve ser possível atualizar a foto de perfil da biblioteca
+
 
 ## RNs ( Regras de negócio )
 
