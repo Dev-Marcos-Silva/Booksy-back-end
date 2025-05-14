@@ -1,6 +1,6 @@
 import { Prisma} from "@prisma/client";
-import { UserRepository } from "../users-repositories.js";
-import { prisma } from "../../lib/index.js";
+import { UserRepository } from "../users-repositories";
+import { prisma } from "../../lib/index";
 
 export class PrismaUsersRespository implements UserRepository {
 

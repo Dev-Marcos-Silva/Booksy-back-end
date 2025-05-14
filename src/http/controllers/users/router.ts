@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { createUser } from "./createUser.js";
+import { createUser } from "./createUser";
 
 export function routersUsers(app: FastifyInstance){
 

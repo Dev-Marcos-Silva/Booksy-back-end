@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from "zod";
-import { makeCreateUserUseCase } from "../../../use-case/factories/make-create-user-use-case.js";
-import { UserAlreadyExistsError } from "../../../use-case/err/user-already-exists-err.js";
+import { makeCreateUserUseCase } from "../../../use-case/factories/make-create-user-use-case";
+import { UserAlreadyExistsError } from "../../../use-case/err/user-already-exists-err";
 
 export function createUser(request: FastifyRequest , reply: FastifyReply ){
 

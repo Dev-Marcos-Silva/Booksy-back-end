@@ -1,6 +1,6 @@
 import fastify from 'fastify';
-import { env } from './env/index.js';
-import { routersUsers } from './http/controllers/users/router.js';
+import { env } from './env/index';
+import { routersUsers } from './http/controllers/users/router';
 
 const app = fastify()
 

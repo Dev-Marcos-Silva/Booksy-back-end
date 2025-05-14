@@ -1,5 +1,5 @@
-import { PrismaUsersRespository } from "../../repositories/prisma/users-prisma-repositories.js";
-import { CreateUserUseCase } from "../createUser.js";
+import { PrismaUsersRespository } from "../../repositories/prisma/users-prisma-repositories";
+import { CreateUserUseCase } from "../createUser";
 
 export function makeCreateUserUseCase(){
 
