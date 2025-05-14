@@ -4,7 +4,7 @@ Sistema de Gerenciamento de Biblioteca
 
 ## RFs ( Requisitos funcionais )
 
-- [ ] Deve ser possível se cadastrar
+- [x] Deve ser possível se cadastrar
 - [ ] Deve ser possível se autenticar
 - [ ] Deve ser possível pesquisa por um livro(titulo ou nome do autor)
 - [ ] Deve ser possível obter as informações do livro

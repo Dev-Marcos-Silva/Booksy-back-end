@@ -1,9 +1,173 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model PhoneUser{
+  id              Int @id @default(autoincrement())
+  phone           String 
+  user_id         String @unique
+
+  user            User @relation(fields: [user_id], references: [id])
+
+  @@map("phones_users")
+}
+
+model AddressUser{
+  id              Int @id @default(autoincrement())
+  city            String
+  neighborhood    String
+  street          String
+  number          String
+  user_id         String @unique
+
+  user            User @relation(fields: [user_id], references: [id])
+
+  @@map("addresses_users")
+}
+
+model User{
+  id              String @id @default(uuid())
+  name            String 
+  email           String @unique
+  password        String 
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
+
+  phone_user      PhoneUser?
+  address_user    AddressUser?
+  rented_book     Rented_Books[]
+  assessment_book Assessment[]
+  comments_book   Comment[]
+
+  @@map("users")
+}
+
+model Library{
+  id              String @id @default(uuid())
+  name            String 
+  email           String @unique
+  password        String 
+  cnpj            String
+  description     String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
+
+  phone_library   PhoneLibrary?
+  address_library AddressLibrary?
+  books_library   Book[]
+  rented_books    Rented_Books[]
+  response        Response[]
+
+  @@map("libraries")
+}
+
+model PhoneLibrary{
+  id              Int @id @default(autoincrement())
+  phone           String
+  library_id      String @unique
+
+  library         Library @relation(fields: [library_id], references: [id]) 
+
+  @@map("phones_libraries")
+}
+
+model AddressLibrary{
+  id              Int @id @default(autoincrement())
+  city            String
+  neighborhood    String
+  street          String
+  number          String
+  library_id      String @unique
+
+  library         Library @relation(fields: [library_id], references: [id])
+
+  @@map("addresses_libraries")
+}
+
+model Book{
+  id              Int @id @default(autoincrement())
+  title           String
+  author          String
+  description     String
+  category        String
+  edition         String
+  finishing       String
+  year_publi      String
+  availability    String ?
+  isbn            String @unique
+  dimensions      String
+  page            Int
+  amount          Int
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
+  library_id      String 
+
+  library         Library @relation(fields: [library_id], references: [id])
+  rented_book     Rented_Books[]
+  assessment_user Assessment[]
+  comments_user   Comment[]
+
+  @@map("books")
+}
+
+model Rented_Books{
+  id              Int @id @default(autoincrement())
+  days            Int
+  order_data      DateTime @default(now()) 
+  delivery_data   DateTime?
+  return_data     DateTime?
+  book_id         Int 
+  library_id      String 
+  user_id         String 
+
+  book            Book @relation(fields: [book_id], references: [id])
+  library         Library @relation(fields: [library_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id])
+
+  @@map("rented_books")
+}
+
+model Assessment{
+  id              Int @id @default(autoincrement())
+  star            Int
+  created_at      DateTime @default(now())
+  book_id         Int
+  user_id         String
+
+  book            Book @relation(fields: [book_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id])
+
+  @@map("assessment")
+}
+
+model Comment{
+  id              Int @id @default(autoincrement())
+  comment         String
+  created_at      DateTime @default(now())
+  book_id         Int
+  user_id         String
+
+  book            Book @relation(fields: [book_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id])
+
+  response        Response[]
+
+  @@map("comments")
+}
+
+model Response{
+  id              Int @id @default(autoincrement())
+  response        String
+  comment_id      Int
+  library_id      String
+
+  comment         Comment @relation(fields: [comment_id], references: [id])
+  library         Library @relation(fields: [library_id], references: [id])
+
+  @@map("responses")
 }
