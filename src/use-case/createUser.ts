@@ -3,21 +3,21 @@ import { UserRepository } from "../repositories/users-repositories";
 import { User } from "@prisma/client";
 import { hash } from "bcryptjs";
 
-interface CreateUserUseCaseRequest {
+interface CreateUserUseCaseRequest{
     name: string,
     email: string,
     password: string
 }
 
-interface CreateUserUseCaseResponse {
+interface CreateUserUseCaseResponse{
     user: User  
 }
 
-export class CreateUserUseCase {
+export class CreateUserUseCase{
 
     constructor(private userRepository: UserRepository ){}
 
-    async execute ({name, email, password }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+    async execute({name, email, password }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
 
         const userWithSameEmail = await this.userRepository.findByEmail(email)
 

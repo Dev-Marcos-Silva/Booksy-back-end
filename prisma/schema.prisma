@@ -89,6 +89,11 @@ model AddressLibrary{
   @@map("addresses_libraries")
 }
 
+enum Availability{
+  available
+  unavailable
+}
+
 model Book{
   id              Int @id @default(autoincrement())
   title           String
@@ -98,7 +103,7 @@ model Book{
   edition         String
   finishing       String
   year_publi      String
-  availability    String ?
+  availability    Availability
   isbn            String @unique
   dimensions      String
   page            Int

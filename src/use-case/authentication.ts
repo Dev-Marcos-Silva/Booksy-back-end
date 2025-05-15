@@ -13,6 +13,7 @@ interface AuthenticaionUseCaseResponse {
 }
 
 export class AuthenticaionUseCase{
+    
     constructor(private userRepository: UserRepository){}
 
     async execute ({email, password }: AuthenticaionUseCaseRequest ): Promise<AuthenticaionUseCaseResponse> {
@@ -32,6 +33,5 @@ export class AuthenticaionUseCase{
         return{
             user
         }
-
     }
 }
