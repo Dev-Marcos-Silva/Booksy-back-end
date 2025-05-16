@@ -1,6 +1,6 @@
 import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
-import { libraryRepository } from "../repositories/libraries-repositories";
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface RegisterBookUseCaseRequest{
@@ -27,10 +27,10 @@ export class RegisterBookUseCase{
 
     constructor(
         private booksRepository: BooksRepository,
-        private libraryRepository: libraryRepository
+        private libraryRepository: LibraryRepository
     ){}
 
-    async excute({
+    async execute({
         title, 
         author, 
         description, 

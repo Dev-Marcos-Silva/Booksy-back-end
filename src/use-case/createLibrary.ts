@@ -1,5 +1,5 @@
 import { Library } from "@prisma/client";
-import { libraryRepository } from "../repositories/libraries-repositories";
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
 import { hash } from "bcryptjs";
 
@@ -17,7 +17,7 @@ interface CreateLibraryUseCaseResponse{
 
 export class CreateLibraryUseCase{
     
-    constructor(private libraryRepository: libraryRepository){}
+    constructor(private libraryRepository: LibraryRepository){}
 
     async execute({name, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
 

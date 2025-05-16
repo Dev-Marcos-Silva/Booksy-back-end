@@ -1,6 +1,6 @@
 import { AddressLibrary } from "@prisma/client";
 import { AddressLibraryRepository } from "../repositories/address-library-repositories";
-import { libraryRepository } from "../repositories/libraries-repositories";
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface RegisterAddressLibraryUseCaseRequest{
@@ -8,7 +8,7 @@ interface RegisterAddressLibraryUseCaseRequest{
     neighborhood: string;
     street: string;
     number: string;
-    library_id: string;
+    libraryId: string;
 }
 
 interface RegisterAddressLibraryUseCaseResponse{
@@ -19,12 +19,12 @@ export class RegisterAddressUserUseCase{
 
     constructor(
         private addressLibraryRepository: AddressLibraryRepository,
-        private libraryRepository: libraryRepository    
+        private libraryRepository: LibraryRepository    
     ){}
 
-    async execute({city, neighborhood, street, number, library_id  }: RegisterAddressLibraryUseCaseRequest ): Promise<RegisterAddressLibraryUseCaseResponse> {
+    async execute({city, neighborhood, street, number, libraryId  }: RegisterAddressLibraryUseCaseRequest ): Promise<RegisterAddressLibraryUseCaseResponse> {
 
-        const libraryExists = await this.libraryRepository.findById(library_id)
+        const libraryExists = await this.libraryRepository.findById(libraryId)
 
         if(!libraryExists){
             throw new LibraryNotFoundError()
@@ -36,7 +36,7 @@ export class RegisterAddressUserUseCase{
             street,
             number,
             library:{
-                connect:{ id: library_id }
+                connect:{ id: libraryId }
             }
         })
 

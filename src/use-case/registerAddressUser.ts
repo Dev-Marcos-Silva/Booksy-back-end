@@ -8,7 +8,7 @@ interface RegisterAddressUserUseCaseRequest{
     neighborhood: string;
     street: string;
     number: string;
-    user_id: string;
+    userId: string;
 }
 
 interface RegisterAddressUserUseCaseResponse{
@@ -22,9 +22,9 @@ export class RegisterAddressUserUseCase{
         private userRepository: UserRepository    
     ){}
 
-    async execute({city, neighborhood, street, number, user_id  }: RegisterAddressUserUseCaseRequest ): Promise<RegisterAddressUserUseCaseResponse> {
+    async execute({city, neighborhood, street, number, userId  }: RegisterAddressUserUseCaseRequest ): Promise<RegisterAddressUserUseCaseResponse> {
 
-        const userExists = await this.userRepository.findById(user_id)
+        const userExists = await this.userRepository.findById(userId)
 
         if(!userExists){
             throw new UserNotFoundError()
@@ -36,7 +36,7 @@ export class RegisterAddressUserUseCase{
             street,
             number,
             user:{
-                connect:{ id: user_id }
+                connect:{ id: userId }
             }
         })
 

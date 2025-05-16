@@ -1,6 +1,6 @@
 import { Library, Prisma } from "@prisma/client";
 
-export interface libraryRepository{
+export interface LibraryRepository{
 
     createLibrary(data: Prisma.LibraryCreateInput): Promise<Library>
 
