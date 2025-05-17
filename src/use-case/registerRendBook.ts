@@ -6,10 +6,9 @@ interface RegisterRendBookUseCaseRequest{
     bookId: number
     userId: string
     libraryId: string 
-
 }
 
-interface RegisterRendBookUseCaseReponse{
+interface RegisterRendBookUseCaseResponse{
     rendBook: RentBook
 }
 
@@ -17,7 +16,7 @@ export class RegisterRendBookUseCase{
 
     constructor(private rendBookRepository: RentedBookRepository){}
 
-    async execute({userId, libraryId, bookId, days }: RegisterRendBookUseCaseRequest ): Promise<RegisterRendBookUseCaseReponse> {
+    async execute({userId, libraryId, bookId, days }: RegisterRendBookUseCaseRequest ): Promise<RegisterRendBookUseCaseResponse> {
 
         const rendBook = await this.rendBookRepository.createRendBook({
             days,

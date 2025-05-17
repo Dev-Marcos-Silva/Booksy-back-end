@@ -43,6 +43,7 @@ model User{
   rented_book     RentBook[]
   assessment_book Assessment[]
   comments_book   Comment[]
+  favorite_book   FavoriteBook[]
 
   @@map("users")
 }
@@ -116,6 +117,7 @@ model Book{
   rented_book     RentBook[]
   assessment_user Assessment[]
   comments_user   Comment[]
+  favorite_book   FavoriteBook[]
 
   @@map("books")
 }
@@ -174,6 +176,7 @@ model Comment{
 model Response{
   id              Int @id @default(autoincrement())
   response        String
+  created_at      DateTime @default(now())
   comment_id      Int
   library_id      String
 
@@ -181,4 +184,16 @@ model Response{
   library         Library @relation(fields: [library_id], references: [id])
 
   @@map("responses")
+}
+
+model FavoriteBook{
+  id              Int @id @default(autoincrement())
+  created_at      DateTime @default(now())
+  book_id         Int
+  user_id         String
+
+  user            User @relation(fields: [user_id], references: [id])
+  book            Book @relation(fields: [book_id], references: [id])
+
+  @@map("favorite_books")
 }

@@ -8,7 +8,7 @@ interface RegisterPhoneUserUseCaseRequest{
     userId: string
 }
 
-interface RegisterPhoneUserUseCaseReponse{
+interface RegisterPhoneUserUseCaseResponse{
     phoneUser: PhoneUser
 }
 
@@ -19,7 +19,7 @@ export class RegisterPhoneUserUseCase{
         private userRepository: UserRepository
     ){}
     
-    async execute({phone, userId }: RegisterPhoneUserUseCaseRequest ): Promise<RegisterPhoneUserUseCaseReponse> {
+    async execute({phone, userId }: RegisterPhoneUserUseCaseRequest ): Promise<RegisterPhoneUserUseCaseResponse> {
         
         const user = await this.userRepository.findById(userId)
 

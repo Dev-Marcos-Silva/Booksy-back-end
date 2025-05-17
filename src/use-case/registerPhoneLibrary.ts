@@ -8,17 +8,18 @@ interface RegisterPhoneLibraryUseCaseRequest{
     libraryId: string
 }
 
-interface RegisterPhoneLibraryUseCaseReponse{
+interface RegisterPhoneLibraryUseCaseResponse{
     phoneLibrary: PhoneLibrary
 }
 
 export class RegisterPhoneLibraryUseCase{
+    
     constructor(
         private phoneLibraryRepository: PhoneLibraryRepository,
         private libraryRepository: LibraryRepository
     ){}
 
-    async execute({phone, libraryId}: RegisterPhoneLibraryUseCaseRequest ): Promise<RegisterPhoneLibraryUseCaseReponse> {
+    async execute({phone, libraryId}: RegisterPhoneLibraryUseCaseRequest ): Promise<RegisterPhoneLibraryUseCaseResponse> {
 
         const library = await this.libraryRepository.findById(libraryId)
 
