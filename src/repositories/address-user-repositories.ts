@@ -1,6 +1,6 @@
 import { AddressUser, Prisma } from "@prisma/client";
 
-export interface AddressUserRepository{
+export interface AddressUserRepository {
 
     createAddress(data: Prisma.AddressUserCreateInput ): Promise<AddressUser>
 }

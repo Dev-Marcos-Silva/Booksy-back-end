@@ -40,7 +40,7 @@ model User{
 
   phone_user      PhoneUser?
   address_user    AddressUser?
-  rented_book     Rented_Books[]
+  rented_book     RentBook[]
   assessment_book Assessment[]
   comments_book   Comment[]
 
@@ -60,7 +60,7 @@ model Library{
   phone_library   PhoneLibrary?
   address_library AddressLibrary?
   books_library   Book[]
-  rented_books    Rented_Books[]
+  rented_books    RentBook[]
   response        Response[]
 
   @@map("libraries")
@@ -103,7 +103,7 @@ model Book{
   edition         String
   finishing       String
   year_publi      String
-  availability    Availability
+  availability    Availability @default(available)
   isbn            String @unique
   dimensions      String
   page            Int
@@ -113,14 +113,19 @@ model Book{
   library_id      String 
 
   library         Library @relation(fields: [library_id], references: [id])
-  rented_book     Rented_Books[]
+  rented_book     RentBook[]
   assessment_user Assessment[]
   comments_user   Comment[]
 
   @@map("books")
 }
 
-model Rented_Books{
+enum Visibility{
+  true
+  false
+}
+
+model RentBook{
   id              Int @id @default(autoincrement())
   days            Int
   order_data      DateTime @default(now()) 
@@ -129,6 +134,7 @@ model Rented_Books{
   book_id         Int 
   library_id      String 
   user_id         String 
+  user_visibility Visibility @default(false)
 
   book            Book @relation(fields: [book_id], references: [id])
   library         Library @relation(fields: [library_id], references: [id])
