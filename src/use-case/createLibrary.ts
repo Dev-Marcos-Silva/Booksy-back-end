@@ -2,6 +2,7 @@ import { Library } from "@prisma/client";
 import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
 import { hash } from "bcryptjs";
+import { AccountsRepository } from "../repositories/accounts-repositories";
 
 interface CreateLibraryUseCaseRequest{
     name: string
@@ -17,31 +18,40 @@ interface CreateLibraryUseCaseResponse{
 
 export class CreateLibraryUseCase{
     
-    constructor(private libraryRepository: LibraryRepository){}
+    constructor(
+        private libraryRepository: LibraryRepository,
+        private accountRepository: AccountsRepository
+    ){}
 
     async execute({name, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
 
-        const libraryWithSameEmail = await this.libraryRepository.findByEmail(email)
-
-        const libraryWithSameCnpj = await this.libraryRepository.findByCnpj(cnpj)
-
-        if(libraryWithSameCnpj || libraryWithSameEmail ){
+        const libraryExist = await this.accountRepository.findByEmail(email)
+        
+        if(libraryExist){
             throw new LibraryAlreadyExistsError()
         }
-
-        const password_hash = await hash(password, 6)
-
+        
+        const password_hast = await hash(password, 6)
+        
+        const accountLibrary = await this.accountRepository.createAccount({
+            email,
+            password: password_hast,
+            type: 'library'
+        })
+        
         const library = await this.libraryRepository.createLibrary({
             name,
             email,
             cnpj,
             description,
-            password: password_hash
+            password: password_hast,
+            account: {
+                connect: {id: accountLibrary.id}
+            }
         })
-
+        
         return{
             library
-        }
-
+        } 
     }
 }

@@ -9,11 +9,11 @@ Sistema de Gerenciamento de Biblioteca
 - [ ] Deve ser possível pesquisa por um livro(titulo ou nome do autor)
 - [ ] Deve ser possível obter as informações do livro
 - [ ] Deve ser possível obter as informações da biblioteca
-- [ ] Deve ser possível definir os dias para entregar o livro
-- [ ] Deve ser possível fazer um pedido do livro
-- [ ] Deve ser possível salva um livro
-- [ ] Deve ser possível avaliar o livro
-- [ ] Deve ser possível comentar em um livro
+- [x] Deve ser possível definir os dias para entregar o livro
+- [x] Deve ser possível fazer um pedido do livro
+- [x] Deve ser possível salva um livro
+- [x] Deve ser possível avaliar o livro
+- [x] Deve ser possível comentar em um livro
 - [ ] Deve ser possível obter as informações do livro alugado
 - [ ] Deve ser possível obter o histórico dos livros concluídos
 - [ ] Deve ser possível obter a quantidade de livros concluídos

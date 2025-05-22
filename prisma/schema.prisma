@@ -37,6 +37,7 @@ model User{
   password        String 
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
+  accountId       String @unique
 
   phone_user      PhoneUser?
   address_user    AddressUser?
@@ -44,6 +45,8 @@ model User{
   assessment_book Assessment[]
   comments_book   Comment[]
   favorite_book   FavoriteBook[]
+
+  account         Account @relation(fields: [accountId], references: [id])
 
   @@map("users")
 }
@@ -57,12 +60,15 @@ model Library{
   description     String
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
+  accountId       String @unique
 
   phone_library   PhoneLibrary?
   address_library AddressLibrary?
   books_library   Book[]
   rented_books    RentBook[]
   response        Response[]
+
+  account         Account @relation(fields: [accountId], references: [id])
 
   @@map("libraries")
 }
@@ -196,4 +202,21 @@ model FavoriteBook{
   book            Book @relation(fields: [book_id], references: [id])
 
   @@map("favorite_books")
+}
+
+enum TypeAccount{
+  user
+  library
+}
+
+model Account{
+  id              String @id @default(uuid())
+  email           String @unique
+  password        String
+  type            TypeAccount @default(user)
+
+  user            User?
+  library         Library?
+
+  @@map("accounts")
 }

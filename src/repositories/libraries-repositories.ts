@@ -6,7 +6,6 @@ export interface LibraryRepository {
 
     findByCnpj(cnpj: string): Promise<Library | null>
 
-    findByEmail(email: string): Promise<Library | null>
-
     findById(libraryId: string): Promise<Library | null>
+    
 }
