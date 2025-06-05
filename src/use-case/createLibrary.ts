@@ -6,6 +6,7 @@ import { AccountsRepository } from "../repositories/accounts-repositories";
 
 interface CreateLibraryUseCaseRequest{
     name: string
+    image: string | null
     email: string
     password: string
     cnpj: string
@@ -23,7 +24,7 @@ export class CreateLibraryUseCase{
         private accountRepository: AccountsRepository
     ){}
 
-    async execute({name, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
+    async execute({name, image, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
 
         const libraryExist = await this.accountRepository.findByEmail(email)
         
@@ -41,10 +42,9 @@ export class CreateLibraryUseCase{
         
         const library = await this.libraryRepository.createLibrary({
             name,
-            email,
+            image,
             cnpj,
             description,
-            password: password_hast,
             account: {
                 connect: {id: accountLibrary.id}
             }

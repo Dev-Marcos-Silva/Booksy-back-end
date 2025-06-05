@@ -4,4 +4,6 @@ export interface PhoneLibraryRepository {
 
     creataPhone(data: Prisma.PhoneLibraryCreateInput): Promise<PhoneLibrary>
 
+    getPhone(libraryId: string): Promise<PhoneLibrary>
+    
 }

@@ -33,8 +33,7 @@ model AddressUser{
 model User{
   id              String @id @default(uuid())
   name            String 
-  email           String @unique
-  password        String 
+  avatar          String?
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
   accountId       String @unique
@@ -54,8 +53,7 @@ model User{
 model Library{
   id              String @id @default(uuid())
   name            String 
-  email           String @unique
-  password        String 
+  image           String?
   cnpj            String
   description     String
   created_at      DateTime @default(now())
@@ -104,6 +102,7 @@ enum Availability{
 model Book{
   id              Int @id @default(autoincrement())
   title           String
+  image           String?
   author          String
   description     String
   category        String
@@ -133,6 +132,17 @@ enum Visibility{
   false
 }
 
+enum Complete{
+  true
+  false
+}
+
+enum Accept{
+  true
+  false
+}
+
+
 model RentBook{
   id              Int @id @default(autoincrement())
   days            Int
@@ -142,7 +152,9 @@ model RentBook{
   book_id         Int 
   library_id      String 
   user_id         String 
+  is_complete     Complete @default(false)
   user_visibility Visibility @default(false)
+  is_accepted     Accept @default(false)
 
   book            Book @relation(fields: [book_id], references: [id])
   library         Library @relation(fields: [library_id], references: [id])

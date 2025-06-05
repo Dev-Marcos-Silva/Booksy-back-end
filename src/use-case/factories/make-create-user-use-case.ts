@@ -5,7 +5,9 @@ export function makeCreateUserUseCase(){
 
     const userRepository = new PrismaUsersRespository()
 
-    const createUserUseCase = new CreateUserUseCase(userRepository)
+    const accountRepository = new PrismaUsersRespository()
+
+    const createUserUseCase = new CreateUserUseCase(userRepository, accountRepository)
 
     return createUserUseCase
 }

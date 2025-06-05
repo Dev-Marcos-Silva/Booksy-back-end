@@ -1,11 +1,10 @@
 import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
-import { LibraryRepository } from "../repositories/libraries-repositories";
-import { LibraryNotFoundError } from "./err/library-not-found-err";
 
-interface RegisterBookUseCaseRequest{
+interface UpdateRegisterBookUseCaseRequest{
+    bookId: number
     title: string
-    image:  string | null
+    image: string | null
     author: string
     description: string
     category: string
@@ -16,22 +15,21 @@ interface RegisterBookUseCaseRequest{
     isbn: string
     dimensions: string
     page: number           
-    amount: number 
-    libraryId: string    
+    amount: number  
 }
 
-interface RegisterBookUseCaseResponse{
+interface UpdateRegisterBookUseCaseResponse{
     book: Book
 }
 
-export class RegisterBookUseCase{
+export class UpdateRegisterBookUseCase{
 
     constructor(
         private booksRepository: BooksRepository,
-        private libraryRepository: LibraryRepository
     ){}
 
-    async execute({
+    async execute({ 
+        bookId,
         title,
         image, 
         author, 
@@ -40,21 +38,14 @@ export class RegisterBookUseCase{
         edition, 
         finishing, 
         year_publi, 
-        availability,
+        availability, 
         isbn, 
         dimensions, 
-        page,          
-        amount,  
-        libraryId
-    }: RegisterBookUseCaseRequest): Promise<RegisterBookUseCaseResponse> {
+        page, 
+        amount,}: UpdateRegisterBookUseCaseRequest): Promise<UpdateRegisterBookUseCaseResponse> {
 
-        const library_Id = await this.libraryRepository.findById(libraryId) 
-
-        if(!library_Id){
-            throw new LibraryNotFoundError()
-        }
-
-        const book = await this.booksRepository.createBook({
+        const book = await this.booksRepository.updateBook(
+            bookId,
             title,
             image, 
             author, 
@@ -63,15 +54,12 @@ export class RegisterBookUseCase{
             edition, 
             finishing, 
             year_publi, 
-            availability,
+            availability, 
             isbn, 
             dimensions, 
-            page,          
+            page, 
             amount,
-            library: {
-                connect: {id: libraryId}
-            }    
-        })
+        ) 
 
         return{
             book
