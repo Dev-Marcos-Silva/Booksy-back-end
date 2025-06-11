@@ -54,7 +54,7 @@ model Library{
   id              String @id @default(uuid())
   name            String 
   image           String?
-  cnpj            String
+  cnpj            String @unique
   description     String
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())

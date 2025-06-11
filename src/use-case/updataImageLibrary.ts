@@ -1,5 +1,6 @@
 import { Library } from "@prisma/client"
 import { LibraryRepository } from "../repositories/libraries-repositories"
+import { LibraryNotFoundError } from "./err/library-not-found-err"
 
 interface UpdateImageLibraryUseCaseRequest{
     libraryId: string
@@ -7,7 +8,7 @@ interface UpdateImageLibraryUseCaseRequest{
 }
 
 interface UpdateImageLibraryUseCaseResponse{
-    library: Library
+    libraryUpdate: Library
 }
 
 export class UpdateImageLibraryUseCase{
@@ -16,13 +17,19 @@ export class UpdateImageLibraryUseCase{
 
     async execute({ libraryId, image }: UpdateImageLibraryUseCaseRequest ): Promise<UpdateImageLibraryUseCaseResponse> {
 
-        const library = await this.libraryRepository.updateImage(
+        const library = await this.libraryRepository.findById(libraryId)
+
+        if(!library){
+            throw new LibraryNotFoundError()
+        }
+
+        const libraryUpdate = await this.libraryRepository.updateImage(
             libraryId,
             image
         )
 
         return{
-            library
+            libraryUpdate
         }
 
     }

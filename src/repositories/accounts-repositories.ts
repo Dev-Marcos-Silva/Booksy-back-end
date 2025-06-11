@@ -2,11 +2,11 @@ import { Account, Library, Prisma, User } from "@prisma/client";
 
 export interface AccountsRepository{
 
-    findByEmail(email: string): Promise<(Account & { user?: User; library?: Library } ) | null>
-
     createAccount(data: Prisma.AccountCreateInput): Promise<Account>
 
-    getAccountId(accountId: string): Promise<Account>
+    findByEmail(email: string): Promise<(Account & { user?: User; library?: Library } ) | null>
+
+    getAccountId(accountId: string): Promise<Account | null >
 
     updateData(accountId: string, email: string, newPassword: string): Promise<Account>
     

@@ -4,6 +4,7 @@ import { UserRepository } from "../repositories/users-repositories";
 import { UserAlreadyExistsError } from "./err/user-already-exists-err";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
+import { UserNotFoundError } from "./err/user-not-found-err";
 
 interface UpdateProfileUserUseCaseRequest{
     userId: string
@@ -27,7 +28,11 @@ export class UpdateProfileUserUseCase{
 
     async execute({userId, name, email, newPassword, oldPassword}: UpdateProfileUserUseCaseRequest ): Promise<UpdateProfileUserUseCaseResponse> {
 
-        const user = await this.userRepository.findByUserId(userId)
+        const user = await this.userRepository.findById(userId)
+
+        if(!user){
+            throw new UserNotFoundError()
+        }
 
         const account = await this.accountsRepository.getAccountId(user.accountId)
 

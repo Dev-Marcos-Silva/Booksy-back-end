@@ -6,7 +6,7 @@ Sistema de Gerenciamento de Biblioteca
 
 - [x] Deve ser possível se cadastrar
 - [x] Deve ser possível se autenticar
-- [x] Deve ser possível pesquisa por um livro(titulo)
+- [x] Deve ser possível pesquisa por um livro(titulo ou autor)
 - [x] Deve ser possível obter as informações do livro
 - [x] Deve ser possível obter as informações da biblioteca
 - [x] Deve ser possível definir os dias para entregar o livro
@@ -15,7 +15,9 @@ Sistema de Gerenciamento de Biblioteca
 - [x] Deve ser possível desfavoritar um livro
 - [x] Deve ser possível visualizar livros favoritados
 - [x] Deve ser possível avaliar o livro
+- [x] Deve ser possível obter as avaliações do livro 
 - [x] Deve ser possível comentar em um livro
+- [x] Deve ser possível obter os comentarios no livro 
 - [x] Deve ser possível obter as informações do livro alugado
 - [x] Deve ser possível obter o histórico dos livros concluídos
 - [x] Deve ser possível obter a quantidade de livros concluídos

@@ -4,6 +4,7 @@ import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
+import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface UpdateProfileLibraryUseCaseRequest{
     libraryId: string
@@ -27,7 +28,11 @@ export class UpdateProfileLibraryUseCase{
 
     async execute({ libraryId, name, email, newPassword, oldPassword }: UpdateProfileLibraryUseCaseRequest ): Promise<UpdateProfileLibraryUseCaseResponse>{
 
-        const library = await this.libraryRepository.findByLibraryId(libraryId)
+        const library = await this.libraryRepository.findById(libraryId)
+
+        if(!library){
+            throw new LibraryNotFoundError()
+        }
 
         const account = await this.accountsRepository.getAccountId(library.accountId)
 
