@@ -2,22 +2,22 @@ import { RentBook } from "@prisma/client"
 import { RentedBookRepository } from "../repositories/rented-books-repositories"
 
 interface DeleteRendBookHistoryUseCaseRequest{
+    rentBookId: number
     userId: string
-    bookId: number
-    userVisibility: 'True'
+    visibility: 'true' | 'false'
 }
 
 interface DeleteRendBookHistoryUseCaseResponse{
-    history: RentBook[]
+    history: RentBook
 }
 
 export class DeleteRendBookHistoryUseCase{
 
     constructor(private rendBookRepository: RentedBookRepository ){}
 
-    async execute({ userId, bookId, userVisibility }: DeleteRendBookHistoryUseCaseRequest ): Promise<DeleteRendBookHistoryUseCaseResponse>{
+    async execute({ rentBookId, userId, visibility }: DeleteRendBookHistoryUseCaseRequest ): Promise<DeleteRendBookHistoryUseCaseResponse>{
 
-        const history = await this.rendBookRepository.deleteRendBookUser(userId, bookId, userVisibility)
+        const history = await this.rendBookRepository.deleteRendBookUser(rentBookId ,userId, visibility)
 
         return{
             history

@@ -3,7 +3,7 @@ import { RentedBookRepository } from "../repositories/rented-books-repositories"
 
 interface UpdateCompleteRendBookUseCaseRequest{
     rentBookId: number
-    isComplete: string
+    isComplete: 'true' | 'false'
     dataComplete: string
 }
 

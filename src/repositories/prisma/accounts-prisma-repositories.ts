@@ -1,4 +1,4 @@
-import { Prisma, Account, Library, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { AccountsRepository } from "../accounts-repositories";
 import { prisma } from "../../lib";
 
@@ -47,5 +47,4 @@ export class PrismaAccountsRepository implements AccountsRepository {
 
         return account
     }
-
 }

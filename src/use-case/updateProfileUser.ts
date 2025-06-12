@@ -5,6 +5,7 @@ import { UserAlreadyExistsError } from "./err/user-already-exists-err";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
 import { UserNotFoundError } from "./err/user-not-found-err";
+import { AccountNotFoundError } from "./err/account-not-found-err";
 
 interface UpdateProfileUserUseCaseRequest{
     userId: string
@@ -35,6 +36,10 @@ export class UpdateProfileUserUseCase{
         }
 
         const account = await this.accountsRepository.getAccountId(user.accountId)
+
+        if(!account){
+            throw new AccountNotFoundError()
+        }
 
         const userExist = await this.accountsRepository.findByEmail(email)
 

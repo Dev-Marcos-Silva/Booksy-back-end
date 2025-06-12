@@ -4,6 +4,6 @@ export interface AddressUserRepository {
 
     createAddress(data: Prisma.AddressUserCreateInput ): Promise<AddressUser>
 
-    getAddress(userId: string): Promise<AddressUser>
+    getAddress(userId: string): Promise<AddressUser | null>
     
 }

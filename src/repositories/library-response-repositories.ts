@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Response } from "@prisma/client";
 
 export interface LibraryResponseRepository{
 

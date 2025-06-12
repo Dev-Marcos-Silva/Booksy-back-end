@@ -13,8 +13,8 @@ interface GetProfileUserUseCaseRequest{
 interface GetProfileUserUseCaseResponse{
     user: User
     account: Account
-    address: AddressUser
-    phone: PhoneUser
+    address: AddressUser | null
+    phone: PhoneUser | null
 }
 
 export class GetProfileUserUseCase{

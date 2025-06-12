@@ -10,14 +10,14 @@ export interface RentedBookRepository{
 
     fetchRendBookHistory(userId: string): Promise<RentBook[]>
 
-    findRendBookId(rentBookId: number): Promise<RentBook>
+    findRendBookId(rentBookId: number): Promise<RentBook | null>
 
-    updateOrderAccepted(rentBookId: number, isAccepted: string): Promise<RentBook>
+    updateOrderAccepted(rentBookId: number, isAccepted: 'true' | 'false'): Promise<RentBook>
 
     updateOrderDeliver(rentBookId: number, dataDeliver: string, days: number): Promise<RentBook>
 
-    updatrOrderComplete(rentBookId: number, isComplete: string, dataComplete: string): Promise<RentBook>
+    updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: string): Promise<RentBook>
 
-    deleteRendBookUser(userId: string, bookId: number, userVisibility: string): Promise<RentBook[]>
+    deleteRendBookUser(rentBookId: number, userId: string, visibility: 'true' | 'false'): Promise<RentBook>
 
 }

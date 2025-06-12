@@ -44,6 +44,10 @@ export class GetProfileLibraryUseCase{
 
         const phone = await this.phoneRepository.getPhone(libraryId)
 
+        if(!address || !phone){
+            throw new LibraryNotFoundError()
+        }
+
         return{
             library,
             account,

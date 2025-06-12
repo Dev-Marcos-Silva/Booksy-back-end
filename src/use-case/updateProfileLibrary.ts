@@ -5,6 +5,7 @@ import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
+import { AccountNotFoundError } from "./err/account-not-found-err";
 
 interface UpdateProfileLibraryUseCaseRequest{
     libraryId: string
@@ -35,6 +36,10 @@ export class UpdateProfileLibraryUseCase{
         }
 
         const account = await this.accountsRepository.getAccountId(library.accountId)
+
+        if(!account){
+            throw new AccountNotFoundError()
+        }
 
         const libraryExist = await this.accountsRepository.findByEmail(email)
 

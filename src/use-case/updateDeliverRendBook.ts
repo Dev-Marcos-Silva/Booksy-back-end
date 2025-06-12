@@ -1,5 +1,6 @@
 import { RentBook } from "@prisma/client"
 import { RentedBookRepository } from "../repositories/rented-books-repositories"
+import { BookNotFoundError } from "./err/book-not-found-err"
 
 interface UpdateDeliverRendBookUseCaseRequest{
     rentBookId: number
@@ -16,7 +17,13 @@ export class UpdateDeliverRendBookUseCase{
 
     async execute({ rentBookId, dataDeliver }: UpdateDeliverRendBookUseCaseRequest): Promise<UpdateDeliverRendBookUseCaseResponse> {
         
-        const { days } = await this.rendBookRepository.findRendBookId(rentBookId)
+        const rendBook = await this.rendBookRepository.findRendBookId(rentBookId)
+
+        if(!rendBook){
+            throw new BookNotFoundError()
+        }
+
+        const { days } = rendBook
 
         const book = await this.rendBookRepository.updateOrderDeliver(
             rentBookId,

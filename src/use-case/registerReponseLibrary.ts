@@ -1,4 +1,5 @@
 import { LibraryResponseRepository } from "../repositories/library-response-repositories";
+import { Response } from "@prisma/client";
 
 interface RegisterResponseLibraryUseCaseRequest{
     text: string
