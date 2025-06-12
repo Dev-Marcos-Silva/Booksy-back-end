@@ -15,7 +15,7 @@ interface RegisterAddressLibraryUseCaseResponse{
     libraryAddress : AddressLibrary
 }
 
-export class RegisterAddressUserUseCase{
+export class RegisterAddressLibraryUseCase{
 
     constructor(
         private addressLibraryRepository: AddressLibraryRepository,

@@ -1,20 +1,20 @@
 import { FavoriteBook } from "@prisma/client"
 import { FavoriteBookRepository } from "../repositories/favorite-book-repositories"
 
-interface FavoriteBookUseCaseRequest{
+interface RegisterFavoriteBookUseCaseRequest{
     userId: string
     bookId: number
 }
 
-interface FavoriteBookUseCaseResponse{
+interface RegisterFavoriteBookUseCaseResponse{
     favoriteBook: FavoriteBook
 }
 
-export class FavoriteBookUseCase{
+export class RegisterFavoriteBookUseCase{
     
     constructor(private favoriteBookRepository: FavoriteBookRepository){}
 
-    async execute({userId, bookId}: FavoriteBookUseCaseRequest ): Promise<FavoriteBookUseCaseResponse> {
+    async execute({userId, bookId}: RegisterFavoriteBookUseCaseRequest ): Promise<RegisterFavoriteBookUseCaseResponse> {
 
         const favoriteBook = await this.favoriteBookRepository.register({
             book:{
