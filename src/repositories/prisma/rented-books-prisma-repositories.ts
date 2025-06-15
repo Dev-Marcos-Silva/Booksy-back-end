@@ -89,7 +89,7 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
         return rentedBook
     }
 
-    async updateOrderDeliver(rentBookId: number, dataDeliver: string, days: number) {
+    async updateOrderDeliver(rentBookId: number, dataDeliver: Date, days: number) {
 
         
         const rentedBook = await prisma.rentBook.update({
@@ -105,7 +105,7 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
         return rentedBook
     }
 
-    async updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: string) {
+    async updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: Date) {
         
         const rentedBook = await prisma.rentBook.update({
             where: {

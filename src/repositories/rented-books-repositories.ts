@@ -14,9 +14,9 @@ export interface RentedBookRepository{
 
     updateOrderAccepted(rentBookId: number, isAccepted: 'true' | 'false'): Promise<RentBook>
 
-    updateOrderDeliver(rentBookId: number, dataDeliver: string, days: number): Promise<RentBook>
+    updateOrderDeliver(rentBookId: number, dataDeliver: Date, days: number): Promise<RentBook>
 
-    updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: string): Promise<RentBook>
+    updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: Date): Promise<RentBook>
 
     deleteRendBookUser(rentBookId: number, userId: string, visibility: 'true' | 'false'): Promise<RentBook>
 

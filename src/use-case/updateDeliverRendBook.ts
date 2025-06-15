@@ -4,7 +4,7 @@ import { BookNotFoundError } from "./err/book-not-found-err"
 
 interface UpdateDeliverRendBookUseCaseRequest{
     rentBookId: number
-    dataDeliver: string
+    dataDeliver: Date
 }
 
 interface UpdateDeliverRendBookUseCaseResponse{

@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { createUser } from "./createUser";
+import { create } from "./create";
 
 export function routersUsers(app: FastifyInstance){
 
-    app.post('/user', createUser)
+    app.post('/user', create)
 
 }
