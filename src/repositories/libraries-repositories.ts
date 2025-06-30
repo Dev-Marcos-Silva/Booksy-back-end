@@ -11,5 +11,8 @@ export interface LibraryRepository {
     updateImage(libraryId: string, image: string | null): Promise<Library>
     
     updateData(libraryId: string, name: string): Promise<Library>
+
+    findByAccouny(accountId: string): Promise<Library | null>
+    
     
 }

@@ -39,6 +39,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
         await registerPhoneLibraryUseCase.execute({phone, libraryId})
 
+        reply.status(201).send()
+
     }catch(err){
 
         if(err instanceof LibraryAlreadyExistsError){
@@ -50,6 +52,4 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
         throw err
     }
-
-    reply.status(201).send()
 }

@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeGetProfileLibraryUseCase } from "../../../use-case/factories/make-get-profile-library-use-case";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
 import { AccountNotFoundError } from "../../../use-case/err/account-not-found-err";
 
 export async function profile(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        libraryId: z.string().uuid()
-    })
-
-    const {libraryId} = schemaRequest.parse(request.body)
+    const libraryId = request.user.sub
 
     try{
 

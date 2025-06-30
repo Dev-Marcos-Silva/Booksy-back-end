@@ -2,7 +2,7 @@ import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
 
 interface GetTopRatedBooksUseCaseResponse{
-    book: Book[]
+    books: Book[]
 }
 
 export class GetTopRatedBooksUseCase{
@@ -11,10 +11,10 @@ export class GetTopRatedBooksUseCase{
 
     async execute(): Promise<GetTopRatedBooksUseCaseResponse> {
 
-        const book = await this.booksRepository.getBookTopRated()
+        const books = await this.booksRepository.getBookTopRated()
 
         return{
-            book
+            books
         }
     }
 }

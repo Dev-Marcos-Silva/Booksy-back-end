@@ -60,4 +60,15 @@ export class PrismaLibrariesRepository implements LibraryRepository {
 
         return library
     }
+
+    async findByAccouny(accountId: string){
+
+        const library = await prisma.library.findUnique({
+            where: {
+                accountId
+            }
+        })
+
+        return library
+    }
 }

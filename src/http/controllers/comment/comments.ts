@@ -14,7 +14,7 @@ export async function comments(request: FastifyRequest, reply: FastifyReply){
 
         const getBooksCommentUseCase = makeGetBooksCommentUseCase()
 
-        const comments = await getBooksCommentUseCase.execute({bookId})
+        const {comments} = await getBooksCommentUseCase.execute({bookId})
 
         return reply.status(200).send({comments})
 

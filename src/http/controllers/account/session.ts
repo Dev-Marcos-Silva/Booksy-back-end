@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { makeAuthenticationUseCase } from "../../../use-case/factories/make-authentication-use-case";
 import { InvalidCredentialsError } from "../../../use-case/err/invalid-credetials-err";
+import { getIdAccount } from "../../../utils/get-id-account";
 
 export async function session(request: FastifyRequest, reply: FastifyReply){
 
@@ -16,9 +17,43 @@ export async function session(request: FastifyRequest, reply: FastifyReply){
 
         const authenticationUseCase = makeAuthenticationUseCase()
 
-        const account = await authenticationUseCase.execute({email, password})
+        const { account, user, library } = await authenticationUseCase.execute({email, password})
 
-        return reply.status(200).send(account)
+        const id = getIdAccount(user, library)
+       
+        const token = await reply.jwtSign(
+            {
+                role: account.type
+            },
+            {
+                sign:{
+                    sub: id,
+                    expiresIn: '30s'
+                }
+            }
+        )
+
+        const refreshToken = await reply.jwtSign(
+            {
+                role: account.type
+            },
+            {
+                sign:{
+                    sub: id,
+                    expiresIn: '7d'
+                }
+            }
+        )
+
+        return reply
+            .setCookie('refreshToken', refreshToken, {
+                path: '/',
+                secure: true,
+                sameSite: true,
+                httpOnly: true
+            })
+            .status(200)
+            .send({type: account.type, token})
 
     }catch(err){
 

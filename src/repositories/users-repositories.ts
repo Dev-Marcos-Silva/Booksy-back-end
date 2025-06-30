@@ -9,5 +9,7 @@ export interface UserRepository {
     updateAvatar(userId: string, avatar: string | null): Promise<User>
 
     updateData(userId: string, name: string): Promise<User>
+
+    findByAccouny(accountId: string): Promise<User | null>
     
 }

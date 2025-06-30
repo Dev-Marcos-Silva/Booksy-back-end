@@ -6,7 +6,7 @@ interface SearchBookTitleOrAuthorUseCaseRequest{
 }
 
 interface SearchBookTitleOrAuthorUseCaseResponse{
-    book: Book[]
+    books: Book[]
 }
 
 export class SearchBookTitleOrAuthorUseCase{
@@ -15,10 +15,10 @@ export class SearchBookTitleOrAuthorUseCase{
 
     async execute({ query }: SearchBookTitleOrAuthorUseCaseRequest ): Promise<SearchBookTitleOrAuthorUseCaseResponse> {
 
-        const book = await this.bookRepository.searchByTitleOrAuthor(query)
+        const books = await this.bookRepository.searchByTitleOrAuthor(query)
 
         return{
-            book
+            books
         }
     }
 }

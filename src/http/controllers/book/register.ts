@@ -5,6 +5,8 @@ import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-er
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 
+    const libraryId = request.user.sub
+
     const schemaRequest = z.object({
         title: z.string(),
         image: z.string().nullable(),
@@ -18,11 +20,10 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
         isbn: z.string(),
         dimensions: z.string(),
         page: z.number(),           
-        amount: z.number(),
-        libraryId: z.string().uuid()    
+        amount: z.number(),   
     })
 
-    const {title, image, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount, libraryId} = schemaRequest.parse(request.body)
+    const {title, image, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount} = schemaRequest.parse(request.body)
 
     try{
         

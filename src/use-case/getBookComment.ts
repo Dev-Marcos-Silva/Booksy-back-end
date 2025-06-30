@@ -6,7 +6,7 @@ interface GetBookCommentUseCaseRequest{
 }
 
 interface GetBookCommentUseCaseResponse{
-    comment: Comment[]
+    comments: Comment[]
 }
 
 export class GetBookCommentUseCase{
@@ -15,10 +15,10 @@ export class GetBookCommentUseCase{
 
     async execute({ bookId }: GetBookCommentUseCaseRequest): Promise<GetBookCommentUseCaseResponse>{
 
-        const comment = await this.bookCommentRepository.getComment(bookId)
+        const comments = await this.bookCommentRepository.getComment(bookId)
 
         return{
-            comment
+            comments
         }
     }
 }

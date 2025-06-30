@@ -216,16 +216,16 @@ model FavoriteBook{
   @@map("favorite_books")
 }
 
-enum TypeAccount{
-  user
-  library
+enum Role{
+  USER
+  LIBRARY
 }
 
 model Account{
   id              String @id @default(uuid())
   email           String @unique
   password        String
-  type            TypeAccount @default(user)
+  type            Role @default(USER)
 
   user            User?
   library         Library?

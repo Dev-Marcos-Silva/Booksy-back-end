@@ -14,7 +14,7 @@ export async function history(request: FastifyRequest, reply: FastifyReply){
 
         const fetchRentedBookHistoryUseCase = makeFetchRentedBookHistoryUseCase()
 
-        const history = await fetchRentedBookHistoryUseCase.execute({userId})
+        const {history} = await fetchRentedBookHistoryUseCase.execute({userId})
 
         return reply.status(200).send({history})
 

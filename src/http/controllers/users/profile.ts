@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeGetProfileUserUseCase } from "../../../use-case/factories/make-get-profile-user-use-case";
 import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
 import { AccountNotFoundError } from "../../../use-case/err/account-not-found-err";
 
 export async function profile(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        userId: z.string().uuid()
-    })
-
-    const {userId} = schemaRequest.parse(request.body)
+    const userId = request.user.sub
 
     try{
 

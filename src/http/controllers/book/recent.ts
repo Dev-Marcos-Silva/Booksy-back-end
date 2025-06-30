@@ -7,7 +7,7 @@ export async function recent(request: FastifyRequest, reply: FastifyReply){
 
         const getRecentBooksUseCase = makeGetRecentBooksUseCase()
 
-        const books = await getRecentBooksUseCase.execute()
+        const {books} = await getRecentBooksUseCase.execute()
 
         return reply.status(200).send({books})
 

@@ -14,9 +14,9 @@ export async function user(request: FastifyRequest, reply: FastifyReply){
 
         const fetchRentedBookUserUseCase = makeFetchRentedBookUserUseCase()
 
-        const books = await fetchRentedBookUserUseCase.execute({userId})
+        const { rendBook } = await fetchRentedBookUserUseCase.execute({userId})
 
-        return reply.status(200).send({books})
+        return reply.status(200).send({rendBook})
 
     }catch(err){
         

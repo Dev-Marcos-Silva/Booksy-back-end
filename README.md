@@ -65,6 +65,6 @@ Sistema de Gerenciamento de Biblioteca
 - [x] Utilizar o Zod para tipagem de dados
 - [x] Utilizar Docker + PostgreSQL como Banco de dados
 - [x] Utilizar PrismaORM para manipular o Banco de dados
-- [ ] Utilizar autenticação JWT(JSON WEB TOKEN)
+- [x] Utilizar autenticação JWT(JSON WEB TOKEN)
 - [x] Utilizar sistema de roles RBAC
 

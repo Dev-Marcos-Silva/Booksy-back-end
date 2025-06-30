@@ -14,7 +14,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply){
 
         const searchBookTitleOrAuthorUseCase = makeSearchBookTitleOrAuthorUseCase()
 
-        const books = await searchBookTitleOrAuthorUseCase.execute({query})
+        const {books} = await searchBookTitleOrAuthorUseCase.execute({query})
 
         return reply.status(200).send({books})
 

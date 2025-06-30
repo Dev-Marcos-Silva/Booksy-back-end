@@ -4,14 +4,15 @@ import { makeRegisterResponseLibraryUseCase } from "../../../use-case/factories/
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 
+    const libraryId = request.user.sub
+
     const schemaRequest = z.object({
-        libraryId: z.string().uuid(),
         commentId: z.number().positive().int(), 
         text: z.string()
 
     })
-
-    const {libraryId, commentId, text} = schemaRequest.parse(request.body)
+    
+    const {commentId, text} = schemaRequest.parse(request.body)
 
     try{
 

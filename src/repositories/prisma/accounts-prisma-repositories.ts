@@ -14,8 +14,8 @@ export class PrismaAccountsRepository implements AccountsRepository {
     async findByEmail(email: string) {
 
         const account = await prisma.account.findUnique({
-            where: {
-                email: email
+            where:{
+                email
             }
         })
 

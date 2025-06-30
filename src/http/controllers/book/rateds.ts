@@ -7,7 +7,7 @@ export async function rateds(request: FastifyRequest, reply: FastifyReply){
 
         const getTopRatedBooksUseCase = makeGetTopRatedBooksUseCase()
 
-        const books = await getTopRatedBooksUseCase.execute()
+        const {books} = await getTopRatedBooksUseCase.execute()
 
         return reply.status(200).send({books})
 

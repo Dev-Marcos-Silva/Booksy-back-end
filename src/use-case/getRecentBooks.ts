@@ -2,7 +2,7 @@ import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
 
 interface GetRecentBooksUseCaseResponse{
-    book: Book[]
+    books: Book[]
 }
 
 export class GetRecentBooksUseCase{
@@ -11,10 +11,10 @@ export class GetRecentBooksUseCase{
 
     async execute(): Promise<GetRecentBooksUseCaseResponse> {
 
-        const book = await this.booksRepository.getBookRecent()
+        const books = await this.booksRepository.getBookRecent()
 
         return{
-            book
+            books
         }
     }
 }

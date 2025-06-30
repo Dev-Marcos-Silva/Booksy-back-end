@@ -6,7 +6,7 @@ interface SearchBookCategoryUseCaseRequest{
 }
 
 interface SearchBookCategoryUseCaseResponse{
-    book: Book[]
+    books: Book[]
 }
 
 export class SearchBookCategoryUseCase{
@@ -15,10 +15,10 @@ export class SearchBookCategoryUseCase{
 
     async execute({ category }: SearchBookCategoryUseCaseRequest ): Promise<SearchBookCategoryUseCaseResponse> {
 
-        const book = await this.bookRepository.searchByCategory(category)
+        const books = await this.bookRepository.searchByCategory(category)
 
         return{
-            book
+            books
         }
     }
 }

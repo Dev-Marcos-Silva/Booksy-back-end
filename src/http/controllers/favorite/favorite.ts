@@ -14,9 +14,9 @@ export async function favorite(request: FastifyRequest, reply: FastifyReply){
 
         const fetchFavoriteBookUseCase = makeFetchFavoriteBookUseCase()
 
-        const books = await fetchFavoriteBookUseCase.execute({userId})
+        const {favoriteBook} = await fetchFavoriteBookUseCase.execute({userId})
 
-        return reply.status(200).send({books})
+        return reply.status(200).send({favoriteBook})
 
     }catch(err){
 

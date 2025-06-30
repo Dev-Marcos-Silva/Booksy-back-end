@@ -6,7 +6,7 @@ interface GetBookAssessmentUseCaseRequest{
 }
 
 interface GetBookAssessmentUseCaseResponse{
-    assessment: Assessment[]
+    assessments: Assessment[]
 }
 
 export class GetBookAssessmentUseCase{
@@ -15,10 +15,10 @@ export class GetBookAssessmentUseCase{
 
     async execute({ bookId }: GetBookAssessmentUseCaseRequest): Promise<GetBookAssessmentUseCaseResponse>{
 
-        const assessment = await this.bookAssessmentRepository.getAssessment(bookId)
+        const assessments = await this.bookAssessmentRepository.getAssessment(bookId)
 
         return{
-            assessment
+            assessments
         }
     }
 }
