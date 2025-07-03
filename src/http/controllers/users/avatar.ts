@@ -1,17 +1,17 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeUpdateAvatarUserUseCase } from "../../../use-case/factories/make-update-avatar-user-use-case";
 import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
 
 export async function avatar(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        userId: z.string().uuid(),
-        avatar: z.string().nullable()
-    })
+    const userId = request.user.sub
 
-    const {userId, avatar} = schemaRequest.parse(request.body)
+    const avatar = request.avatar
 
+    if(avatar === undefined){
+        throw new Error('Not attributable to image type')
+    }
+    
     try{
 
         const updateAvatarUserUseCase = makeUpdateAvatarUserUseCase()

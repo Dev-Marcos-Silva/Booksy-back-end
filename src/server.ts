@@ -3,6 +3,7 @@ import { env } from './env/index';
 import { routers } from './http/router';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
+import multipart from '@fastify/multipart';
 
 const app = fastify()
 
@@ -14,7 +15,9 @@ app.register(fastifyJwt, {
         cookieName: 'refreshToken',
         signed: false
     }
-})  
+}) 
+
+app.register(multipart)
 
 app.register(routers)
 

@@ -24,7 +24,7 @@ export class PrismaUsersRespository implements UserRepository {
 
     async updateAvatar(userId: string, avatar: string | null){
 
-        const userUpdateAvatar = await prisma.user.update({
+        const user = await prisma.user.update({
             where:{
                 id: userId
             },
@@ -33,7 +33,7 @@ export class PrismaUsersRespository implements UserRepository {
             }
         })
 
-        return userUpdateAvatar
+        return user
     }
 
     async updateData(userId: string, name: string){

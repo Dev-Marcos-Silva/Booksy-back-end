@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Book, Prisma } from "@prisma/client";
 import { BooksRepository } from "../books-repositories";
 import { prisma } from "../../lib";
 
@@ -161,6 +161,20 @@ export class PrismaBooksRepository implements BooksRepository {
             })
 
             return book
+    }
+
+    async updateImage(bookId: number, image: string | null){
+
+        const book = await prisma.book.update({
+            where:{
+                id: bookId
+            },
+            data:{
+                image: image
+            }
+        })
+
+        return book
     }
 
     async deleteBookById(bookId: number, libraryId: string){

@@ -7,7 +7,7 @@ export async function avatar(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
         libraryId: z.string().uuid(),
-        image: z.string()
+        image: z.string().nullable()
     })
 
     const {libraryId, image} = schemaRequest.parse(request.body)

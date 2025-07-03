@@ -35,6 +35,8 @@ export interface BooksRepository {
         amount: number, 
     ): Promise<Book>
 
+    updateImage(bookId: number, image: string | null): Promise<Book>
+
     deleteBookById(bookId: number, libraryId: string): Promise<Book[]>
     
 }
