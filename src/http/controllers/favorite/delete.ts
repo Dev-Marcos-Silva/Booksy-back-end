@@ -6,16 +6,16 @@ export async function deleteFavorite(request: FastifyRequest, reply: FastifyRepl
 
     const schemaRequest = z.object({
         userId: z.string().uuid(),
-        bookId: z.number().positive().int()
+        favoriteBookId: z.number().positive().int()
     })
 
-    const {userId, bookId} = schemaRequest.parse(request.body)
+    const {userId, favoriteBookId} = schemaRequest.parse(request.body)
 
     try{
 
         const deleteFavoriteBookUseCase = makeDeleteFavoriteBookUseCase()
 
-        await deleteFavoriteBookUseCase.execute({userId, bookId})
+        await deleteFavoriteBookUseCase.execute({userId, favoriteBookId})
 
         return reply.status(200).send()
 

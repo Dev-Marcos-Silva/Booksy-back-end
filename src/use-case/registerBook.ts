@@ -4,6 +4,7 @@ import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface RegisterBookUseCaseRequest{
+    bookId: string
     title: string
     image:  string | null
     author: string
@@ -32,6 +33,7 @@ export class RegisterBookUseCase{
     ){}
 
     async execute({
+        bookId,
         title,
         image, 
         author, 
@@ -54,7 +56,13 @@ export class RegisterBookUseCase{
             throw new LibraryNotFoundError()
         }
 
+        const bookExist = await this.booksRepository.findBookIsbn(isbn)
+        
+
+        const id = bookId
+
         const book = await this.booksRepository.createBook({
+            id,
             title,
             image, 
             author, 

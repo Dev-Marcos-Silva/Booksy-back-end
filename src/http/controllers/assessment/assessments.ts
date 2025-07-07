@@ -5,7 +5,7 @@ import { makeGetBooksAssessmentUseCase } from "../../../use-case/factories/make-
 export async function assessments(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
-        bookId: z.number().positive().int(),
+        bookId: z.string().uuid()
     })
 
     const {bookId} = schemaRequest.parse(request.body)

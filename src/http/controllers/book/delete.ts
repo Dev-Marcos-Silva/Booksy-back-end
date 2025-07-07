@@ -1,15 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeDeleteRegisterBookUseCase } from "../../../use-case/factories/make-delete-register-book-use-case";
 
 export async function deleteBook(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        libraryId: z.string().uuid(),
-        bookId: z.number().positive().int()
-    })
+    const libraryId = request.user.sub
 
-    const {libraryId, bookId} = schemaRequest.parse(request.body)
+    const { id } = request.params as { id: string }
+
+    const bookId = id
 
     try{
 

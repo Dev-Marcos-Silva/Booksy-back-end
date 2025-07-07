@@ -11,5 +11,5 @@ export interface UserRepository {
     updateData(userId: string, name: string): Promise<User>
 
     findByAccouny(accountId: string): Promise<User | null>
-    
+ 
 }

@@ -1,15 +1,32 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeCreateLibraryUseCase } from "../../../use-case/factories/make-create-library-use-case";
 import { makeRegisterAddressLibraryUseCase } from "../../../use-case/factories/make-register-address-library-use-case";
 import { makeRegisterPhoneLibraryUseCase } from "../../../use-case/factories/make-register-phone-library-use-case";
 import { LibraryAlreadyExistsError } from "../../../use-case/err/library-already-exists-err";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
+import { makeDeleteUserUseCase } from "../../../use-case/factories/make-delete-user-use-case";
+import { deleteImageAfterError } from "../../../utils/delete-image";
+import z from "zod";
 
 export async function create(request: FastifyRequest, reply: FastifyReply){
 
+    const libraryId = request.id
+
+    const { id } = request.params as { id: string }
+
+    const userId = id
+
+    if(!userId){
+         reply.status(404).send({message: "USER NAO ENCONTRADO"})
+    }
+
+    const image = request.image
+
+    if(image === undefined){
+        return reply.status(400).send({message: 'Not attributable to image type'})
+    }
+
     const schemaRequest = z.object({
-        image: z.string(),
         name: z.string(),
         email: z.string().email(),
         password: z.string().min(6),
@@ -22,26 +39,28 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
         phone: z.string()
     })
 
-    const {image, name, email, password, cnpj, description, city, neighborhood, street, number, phone} = schemaRequest.parse(request.body)
-
+    const {name, email, password, cnpj, description, city, neighborhood, street, number, phone} = schemaRequest.parse(request.body)
 
     try{
 
         const createLibraryUseCase = makeCreateLibraryUseCase()
         const registerAddressLibraryUseCase = makeRegisterAddressLibraryUseCase()
         const registerPhoneLibraryUseCase = makeRegisterPhoneLibraryUseCase()
+        const deleteUserUseCase = makeDeleteUserUseCase()
 
-        const { library } = await createLibraryUseCase.execute({name, image, email, password, cnpj, description})
-
-        const libraryId = library.id
+        await createLibraryUseCase.execute({libraryId, name, image, email, password, cnpj, description})
 
         await registerAddressLibraryUseCase.execute({city, neighborhood, street, number, libraryId })
 
         await registerPhoneLibraryUseCase.execute({phone, libraryId})
 
+        await deleteUserUseCase.execute({userId})
+        
         reply.status(201).send()
 
     }catch(err){
+
+        deleteImageAfterError('library',libraryId)
 
         if(err instanceof LibraryAlreadyExistsError){
             reply.status(409).send({message: err.message})

@@ -5,6 +5,7 @@ import { hash } from "bcryptjs";
 import { AccountsRepository } from "../repositories/accounts-repositories";
 
 interface CreateLibraryUseCaseRequest{
+    libraryId: string
     name: string
     image: string | null
     email: string
@@ -24,11 +25,12 @@ export class CreateLibraryUseCase{
         private accountRepository: AccountsRepository
     ){}
 
-    async execute({name, image, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
+    async execute({libraryId, name, image, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
 
         const libraryExist = await this.accountRepository.findByEmail(email)
+        const cnpjExist = await this.libraryRepository.findByCnpj(cnpj)
         
-        if(libraryExist){
+        if(libraryExist || cnpjExist){
             throw new LibraryAlreadyExistsError()
         }
         
@@ -37,10 +39,13 @@ export class CreateLibraryUseCase{
         const accountLibrary = await this.accountRepository.createAccount({
             email,
             password: password_hast,
-            type: 'library'
+            type: 'LIBRARY'
         })
+
+        const id = libraryId
         
         const library = await this.libraryRepository.createLibrary({
+            id,
             name,
             image,
             cnpj,

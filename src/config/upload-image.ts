@@ -1,42 +1,56 @@
+import { MultipartFile } from "@fastify/multipart";
+import { randomUUID } from "crypto";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { pipeline } from "stream/promises";
 import path from "path";
-import fs from "fs"; 
+import fs from "fs";
 
-export function updateImage(folder: string){
+export function uploadImage(folder: string){
 
     return async function(request: FastifyRequest, reply: FastifyReply){
 
-        // depois de instalar o @fastify/multipart, obter os dados do arquivo enviado
-        const data = await request.file()
-        const userId = request.user.sub
+        // criar um uuid 
+        const id = randomUUID()
 
+        // criar as variaves para armazenar a imagem e o json
+        let image: MultipartFile | null = null
+        let json: any = null
 
-        // garante que só imagens sejam aceitas.
-        if(!data?.mimetype.startsWith('image/')){
+        // pecorre os campos do arquivo e json(em string) e retorna image e json
+        for await (const part of request.parts()) {
 
-            return reply.status(400).send({message: 'File must be an image'})
+            if(part.type === 'file' && part.fieldname === 'image'){
+                // IMPORTANTE! dentro do if e recomendodo salva com o pipeline
+                image = part
+
+                if(image?.mimetype === 'image/'){
+                    return reply.status(400).send({message: 'File must be an image'})
+                }
+
+                const uploadDir = path.resolve(__dirname, `../../upload/${folder}`)
+
+                if(!fs.existsSync(uploadDir)){
+                    fs.mkdirSync(uploadDir, { recursive: true })
+                }
+
+                const fieldname = `${id}.png`
+                const filePath = path.join(uploadDir, fieldname)
+
+                if(!image){
+                    return reply.status(400).send({message: 'File must be an image'})
+                }
+
+                await pipeline(image.file, fs.createWriteStream(filePath))
+
+                request.image = fieldname
+            }
+            else if(part.type === 'field' && part.fieldname === 'data' && typeof part.value === 'string'){
+                // pega o texto e trasforma em JSON
+                json = JSON.parse(part.value)
+
+                request.body = json
+                request.id = id
+            }
         }
-
-        // pegar a pasta/diretório com o path
-        const uploadDir = path.resolve(__dirname, `../../upload/${folder}`)
-
-
-        // verificar se existe o diretório, se não, criar com o fs
-        if(!fs.existsSync(uploadDir)){
-            // recursive: true -  cria toda a hierarquia de diretórios se não existir
-            fs.mkdirSync(uploadDir, { recursive: true })
-        }
-
-        // criar o nome do arquivo
-        const filename = `${userId}.png`
-        // montar o caminho completo do arquivo
-        const filePath = path.join(uploadDir, filename)
-
-        // transferir a imagem para o arquivo e diretório
-        await pipeline(data.file, fs.createWriteStream(filePath))
-
-        // retornar o nome do arquivo para o request (para salvar no banco)
-        request.avatar = filename
     }
 }

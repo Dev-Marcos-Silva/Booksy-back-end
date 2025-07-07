@@ -2,7 +2,7 @@ import { Comment } from "@prisma/client";
 import { BookCommentRepository } from "../repositories/books-comment-repositories";
 
 interface GetBookCommentUseCaseRequest{
-    bookId: number
+    bookId: string
 }
 
 interface GetBookCommentUseCaseResponse{

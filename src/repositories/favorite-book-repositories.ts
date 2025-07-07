@@ -6,6 +6,6 @@ export interface FavoriteBookRepository{
 
     fetchFavoriteBook(userId: string): Promise<FavoriteBook[]>
 
-    deleteFavoriteBook(userId: string, bookId: number): Promise<FavoriteBook[]>
+    deleteFavoriteBook(userId: string, favoriteBookId: number): Promise<FavoriteBook[]>
 
 }

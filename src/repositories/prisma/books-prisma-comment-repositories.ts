@@ -11,7 +11,7 @@ export class PrismaBooksCommentRepository implements BookCommentRepository {
         return comment      
     }
 
-    async getComment(bookId: number) {
+    async getComment(bookId: string) {
 
         const comments = await prisma.comment.findMany({
             where: {

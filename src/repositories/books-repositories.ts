@@ -10,16 +10,18 @@ export interface BooksRepository {
 
     searchByCategory(category: string ): Promise<Book[]>
 
+    findBookIsbn(isbn: string): Promise<Book | null>
+
     getBookTopRated(): Promise<BookWithStar[]>
 
     getBookRecent(): Promise<Book[]>
 
-    getBookById(bookId: number ): Promise<Book | null >
+    getBookById(bookId: string ): Promise<Book | null >
 
     getAllBook(libraryId: string ): Promise<Book[]>
 
     updateBook(
-        bookId: number,
+        bookId: string,
         title: string,
         image: string | null, 
         author: string, 
@@ -35,8 +37,8 @@ export interface BooksRepository {
         amount: number, 
     ): Promise<Book>
 
-    updateImage(bookId: number, image: string | null): Promise<Book>
+    updateImage(bookId: string, image: string | null): Promise<Book>
 
-    deleteBookById(bookId: number, libraryId: string): Promise<Book[]>
+    deleteBookById(bookId: string, libraryId: string): Promise<Book[]>
     
 }

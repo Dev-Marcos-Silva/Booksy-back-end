@@ -4,12 +4,12 @@ import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
 
 export async function avatar(request: FastifyRequest, reply: FastifyReply){
 
-    const userId = request.user.sub
+    const userId = request.id
 
-    const avatar = request.avatar
+    const avatar = request.image
 
     if(avatar === undefined){
-        throw new Error('Not attributable to image type')
+        return reply.status(400).send({message: 'Not attributable to image type'})
     }
     
     try{

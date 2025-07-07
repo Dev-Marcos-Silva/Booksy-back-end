@@ -3,7 +3,7 @@ import { BooksRepository } from "../repositories/books-repositories";
 import { BookNotFoundError } from "./err/book-not-found-err";
 
 interface GetBooksUseCaseRequest{
-    bookId: number
+    bookId: string
 }
 
 interface GetBooksUseCaseResponse{

@@ -4,6 +4,6 @@ export interface BookCommentRepository{
     
     register(data: Prisma.CommentCreateInput): Promise<Comment>
 
-    getComment(bookId: number): Promise<Comment[]>
+    getComment(bookId: string): Promise<Comment[]>
 
 }

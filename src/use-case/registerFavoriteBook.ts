@@ -3,7 +3,7 @@ import { FavoriteBookRepository } from "../repositories/favorite-book-repositori
 
 interface RegisterFavoriteBookUseCaseRequest{
     userId: string
-    bookId: number
+    bookId: string
 }
 
 interface RegisterFavoriteBookUseCaseResponse{

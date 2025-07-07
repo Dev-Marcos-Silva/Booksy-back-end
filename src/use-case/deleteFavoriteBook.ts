@@ -3,7 +3,7 @@ import { FavoriteBookRepository } from "../repositories/favorite-book-repositori
 
 interface DeleteFavoriteBookUseCaseRequest{
     userId: string
-    bookId: number
+    favoriteBookId: number
 }
 
 interface DeleteFavoriteBookUseCaseResponse{
@@ -14,9 +14,9 @@ export class DeleteFavoriteBookUseCase{
     
     constructor(private favoriteBookRepository: FavoriteBookRepository){}
 
-    async execute({userId, bookId}: DeleteFavoriteBookUseCaseRequest ): Promise<DeleteFavoriteBookUseCaseResponse> {
+    async execute({userId, favoriteBookId}: DeleteFavoriteBookUseCaseRequest ): Promise<DeleteFavoriteBookUseCaseResponse> {
 
-        const favoriteBook = await this.favoriteBookRepository.deleteFavoriteBook(userId, bookId)
+        const favoriteBook = await this.favoriteBookRepository.deleteFavoriteBook(userId, favoriteBookId)
         
 
         return{

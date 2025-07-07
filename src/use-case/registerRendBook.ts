@@ -7,7 +7,7 @@ import { RegisterAddressOrPhoneError } from "./err/register-address-or-phone-err
 
 interface RegisterRendBookUseCaseRequest{
     days: number
-    bookId: number
+    bookId: string
     userId: string
     libraryId: string 
 }

@@ -2,7 +2,7 @@ import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
 
 interface UpdateRegisterBookUseCaseRequest{
-    bookId: number
+    bookId: string
     title: string
     image: string | null
     author: string

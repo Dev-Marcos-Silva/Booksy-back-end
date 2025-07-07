@@ -2,7 +2,7 @@ import { Book } from "@prisma/client"
 import { BooksRepository } from "../repositories/books-repositories"
 
 interface DeleteRegisterBookUseCaseRequest{
-    bookId: number
+    bookId: string
     libraryId: string
 }
 

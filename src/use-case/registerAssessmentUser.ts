@@ -3,7 +3,7 @@ import { BookAssessmentRepository } from "../repositories/books-assessment-repos
 
 interface RegisterAssessmentUserUseCaseRequest{
     userId: string
-    bookId: number
+    bookId: string
     star: number 
 }
 

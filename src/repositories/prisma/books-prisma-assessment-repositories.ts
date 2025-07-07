@@ -11,7 +11,7 @@ export class PrismaBooksAssessmentRepository implements BookAssessmentRepository
         return assessment
     }
 
-    async getAssessment(bookId: number) {
+    async getAssessment(bookId: string) {
 
         const assessments = await prisma.assessment.findMany({
             where: {

@@ -12,7 +12,7 @@ model PhoneUser{
   phone           String 
   user_id         String @unique
 
-  user            User @relation(fields: [user_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("phones_users")
 }
@@ -25,7 +25,7 @@ model AddressUser{
   number          String
   user_id         String @unique
 
-  user            User @relation(fields: [user_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("addresses_users")
 }
@@ -45,7 +45,7 @@ model User{
   comments_book   Comment[]
   favorite_book   FavoriteBook[]
 
-  account         Account @relation(fields: [accountId], references: [id])
+  account         Account @relation(fields: [accountId], references: [id], onDelete: Cascade )
 
   @@map("users")
 }
@@ -66,7 +66,7 @@ model Library{
   rented_books    RentBook[]
   response        Response[]
 
-  account         Account @relation(fields: [accountId], references: [id])
+  account         Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@map("libraries")
 }
@@ -76,7 +76,7 @@ model PhoneLibrary{
   phone           String
   library_id      String @unique
 
-  library         Library @relation(fields: [library_id], references: [id]) 
+  library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade) 
 
   @@map("phones_libraries")
 }
@@ -89,7 +89,7 @@ model AddressLibrary{
   number          String
   library_id      String @unique
 
-  library         Library @relation(fields: [library_id], references: [id])
+  library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade)
 
   @@map("addresses_libraries")
 }
@@ -100,7 +100,7 @@ enum Availability{
 }
 
 model Book{
-  id              Int @id @default(autoincrement())
+  id              String @id @default(uuid())
   title           String
   image           String?
   author          String
@@ -118,7 +118,7 @@ model Book{
   updated_at      DateTime @default(now())
   library_id      String 
 
-  library         Library @relation(fields: [library_id], references: [id])
+  library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade)
   rented_book     RentBook[]
   assessment_user Assessment[]
   comments_user   Comment[]
@@ -149,16 +149,16 @@ model RentBook{
   order_data      DateTime @default(now()) 
   delivery_data   DateTime?
   return_data     DateTime?
-  book_id         Int 
+  book_id         String 
   library_id      String 
   user_id         String 
   is_complete     Complete @default(false)
   user_visibility Visibility @default(false)
   is_accepted     Accept @default(false)
 
-  book            Book @relation(fields: [book_id], references: [id])
-  library         Library @relation(fields: [library_id], references: [id])
-  user            User @relation(fields: [user_id], references: [id])
+  book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade)
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("rented_books")
 }
@@ -167,11 +167,11 @@ model Assessment{
   id              Int @id @default(autoincrement())
   star            Int
   created_at      DateTime @default(now())
-  book_id         Int
+  book_id         String
   user_id         String
 
-  book            Book @relation(fields: [book_id], references: [id])
-  user            User @relation(fields: [user_id], references: [id])
+  book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("assessment")
 }
@@ -180,11 +180,11 @@ model Comment{
   id              Int @id @default(autoincrement())
   comment         String
   created_at      DateTime @default(now())
-  book_id         Int
+  book_id         String
   user_id         String
 
-  book            Book @relation(fields: [book_id], references: [id])
-  user            User @relation(fields: [user_id], references: [id])
+  book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   response        Response[]
 
@@ -198,8 +198,8 @@ model Response{
   comment_id      Int
   library_id      String
 
-  comment         Comment @relation(fields: [comment_id], references: [id])
-  library         Library @relation(fields: [library_id], references: [id])
+  comment         Comment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade)
 
   @@map("responses")
 }
@@ -207,11 +207,11 @@ model Response{
 model FavoriteBook{
   id              Int @id @default(autoincrement())
   created_at      DateTime @default(now())
-  book_id         Int
+  book_id         String
   user_id         String
 
-  user            User @relation(fields: [user_id], references: [id])
-  book            Book @relation(fields: [book_id], references: [id])
+  user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
 
   @@map("favorite_books")
 }

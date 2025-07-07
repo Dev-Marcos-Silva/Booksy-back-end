@@ -11,7 +11,7 @@ export class PrismaBooksRepository implements BooksRepository {
         return book 
     }
 
-    async getBookById(bookId: number){
+    async getBookById(bookId: string){
 
         const book = await prisma.book.findUnique({
             where: {
@@ -71,6 +71,17 @@ export class PrismaBooksRepository implements BooksRepository {
         return books
     }
 
+    async findBookIsbn(isbn: string){
+
+        const book = await prisma.book.findUnique({
+            where:{
+                isbn: isbn
+            }
+        })
+
+        return book 
+    }
+
     async getBookRecent(){
 
         const books = await prisma.book.findMany({
@@ -124,7 +135,7 @@ export class PrismaBooksRepository implements BooksRepository {
     }
 
     async updateBook(
-        bookId: number, 
+        bookId: string, 
         title: string, 
         image: string | null, 
         author: string, 
@@ -163,7 +174,7 @@ export class PrismaBooksRepository implements BooksRepository {
             return book
     }
 
-    async updateImage(bookId: number, image: string | null){
+    async updateImage(bookId: string, image: string | null){
 
         const book = await prisma.book.update({
             where:{
@@ -177,7 +188,7 @@ export class PrismaBooksRepository implements BooksRepository {
         return book
     }
 
-    async deleteBookById(bookId: number, libraryId: string){
+    async deleteBookById(bookId: string, libraryId: string){
 
         await prisma.book.delete({
             where: {

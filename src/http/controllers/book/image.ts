@@ -1,16 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeUpdateImageBookUseCase } from "../../../use-case/factories/make-update-image-book-use-case";
 import { BookNotFoundError } from "../../../use-case/err/book-not-found-err";
 
 export async function image(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        bookId: z.number().positive().int(),
-        image: z.string().nullable()
-    })
+    const bookId = request.id
 
-    const {bookId, image} = schemaRequest.parse(request.body)
+    const image = request.image
+
+    if(image === undefined){
+        return reply.status(400).send({message: 'Not attributable to image type'})
+    }
 
     try{
 

@@ -2,7 +2,7 @@ import { Assessment } from "@prisma/client";
 import { BookAssessmentRepository } from "../repositories/books-assessment-repositories";
 
 interface GetBookAssessmentUseCaseRequest{
-    bookId: number
+    bookId: string
 }
 
 interface GetBookAssessmentUseCaseResponse{

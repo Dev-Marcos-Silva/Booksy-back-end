@@ -5,7 +5,7 @@ import { makeUpdateRegisterBookUseCase } from "../../../use-case/factories/make-
 export async function update(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
-        bookId: z.number().positive().int(),
+        bookId: z.string().uuid(),
         title: z.string(),
         image: z.string().nullable(),
         author: z.string(),

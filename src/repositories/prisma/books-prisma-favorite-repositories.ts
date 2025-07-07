@@ -22,11 +22,11 @@ export class PrismaBooksFavoriteRepository implements FavoriteBookRepository {
         return favoriteBooks
     }
 
-    async deleteFavoriteBook(userId: string, bookId: number) {
+    async deleteFavoriteBook(userId: string, favoriteBookId: number) {
 
         await prisma.favoriteBook.delete({
             where: {
-                id: bookId,
+                id: favoriteBookId,
                 AND:{
                     user_id: userId
                 }

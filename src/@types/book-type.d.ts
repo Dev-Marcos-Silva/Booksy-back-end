@@ -1,5 +1,5 @@
 export type BookWithStar = {
-    id: number
+    id: string
     title: string
     author: string
     image: string | null

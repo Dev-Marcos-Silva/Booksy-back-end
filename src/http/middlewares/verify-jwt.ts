@@ -4,7 +4,11 @@ export async function jwtVerify(request: FastifyRequest, reply: FastifyReply) {
 
     try{
 
+        //console.log("antes do jwtVerify")
+
         await request.jwtVerify({ onlyCookie: false })
+
+        //console.log("depis do jwtVerify")
 
     }catch(err){
 

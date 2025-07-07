@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply){
 
-    await request.jwtVerify({ onlyCookie: true })
+    await request.jwtVerify()
 
     const { role } = request.user
 
@@ -13,7 +13,7 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
         {
             sign:{
                 sub: request.user.sub,
-                expiresIn: '30s'
+                expiresIn: '1d'
             }
         }
     )

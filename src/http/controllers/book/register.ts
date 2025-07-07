@@ -2,14 +2,22 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { makeRegisterBookUseCase } from "../../../use-case/factories/make-register-book-use-case";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
+import { deleteImageAfterError } from "../../../utils/delete-image";
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 
     const libraryId = request.user.sub
 
+    const bookId = request.id
+
+    const image = request.image
+
+    if(!image){
+        return reply.status(400).send({message: 'Not attributable to image type'})
+    }
+
     const schemaRequest = z.object({
         title: z.string(),
-        image: z.string().nullable(),
         author: z.string(),
         description: z.string(),
         category: z.string(),
@@ -23,15 +31,16 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
         amount: z.number(),   
     })
 
-    const {title, image, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount} = schemaRequest.parse(request.body)
+    const {title, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount} = schemaRequest.parse(request.body)
 
     try{
         
         const registerBookUseCase = makeRegisterBookUseCase()
 
         await registerBookUseCase.execute({
-            title, 
-            image, 
+            bookId,
+            title,  
+            image,
             author, 
             description, 
             category, 
@@ -49,6 +58,8 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
         return reply.status(201).send()
 
     }catch(err){
+
+        deleteImageAfterError('book', bookId)
 
         if(err instanceof LibraryNotFoundError){
             return reply.status(404).send({message: err.message})

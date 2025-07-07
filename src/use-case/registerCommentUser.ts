@@ -3,7 +3,7 @@ import { BookCommentRepository } from "../repositories/books-comment-repositorie
 
 interface RegisterCommentUserUseCaseRequest{
     userId: string
-    bookId: number
+    bookId: string
     text: string
 }
 

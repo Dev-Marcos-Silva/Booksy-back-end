@@ -6,7 +6,7 @@ import { BookNotFoundError } from "../../../use-case/err/book-not-found-err";
 export async function book(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
-        bookId: z.number().positive().int()
+        bookId: z.string().uuid()
     })
 
     const {bookId} = schemaRequest.parse(request.body)

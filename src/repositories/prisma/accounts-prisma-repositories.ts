@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Account, Prisma } from "@prisma/client";
 import { AccountsRepository } from "../accounts-repositories";
 import { prisma } from "../../lib";
 
@@ -46,5 +46,14 @@ export class PrismaAccountsRepository implements AccountsRepository {
         })
 
         return account
+    }
+
+    async deleteAccount(accountId: string){
+
+        await prisma.account.delete({
+            where:{
+                id: accountId
+            }
+        })
     }
 }

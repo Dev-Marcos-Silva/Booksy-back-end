@@ -53,7 +53,7 @@ export async function session(request: FastifyRequest, reply: FastifyReply){
                 httpOnly: true
             })
             .status(200)
-            .send({type: account.type, token})
+            .send({type: account.type, id: id, token})
 
     }catch(err){
 

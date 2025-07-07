@@ -11,9 +11,13 @@ import { recent } from "./recent"
 import { image } from "./image"
 import { jwtVerify } from "../../middlewares/verify-jwt"
 import { verifyAccountRole } from "../../middlewares/verify-account-role"
-import { updateImage } from "../../../config/upload-image"
+import { uploadImage } from "../../../config/upload-image"
+import { updateImage } from "../../../config/update-image"
+import { deleteImage } from "../../../config/delete-image"
 
 export function routersBooks(app: FastifyInstance){
+
+    app.post('/register/book',{onRequest: [jwtVerify, verifyAccountRole], preValidation: uploadImage('book')}, register)
 
     app.get('/book',{onRequest: [jwtVerify]}, book)
 
@@ -25,14 +29,12 @@ export function routersBooks(app: FastifyInstance){
 
     app.get('/recents/book',{onRequest: [jwtVerify]}, recent)
 
-    app.post('/register/book',{onRequest: [jwtVerify, verifyAccountRole], preValidation: updateImage('books')}, register)
-
     app.get('/library/book',{onRequest: [jwtVerify, verifyAccountRole]}, library)
 
     app.put('/update/book',{onRequest: [jwtVerify, verifyAccountRole]}, update)
 
-    app.patch('/imagen/book',{onRequest: [jwtVerify, verifyAccountRole]}, image)
+    app.patch('/imagen/book/:bookId',{onRequest: [jwtVerify, verifyAccountRole], preValidation: updateImage('book')}, image)
 
-    app.delete('/delete/book',{onRequest:[jwtVerify, verifyAccountRole]}, deleteBook)
+    app.delete('/delete/book/:id',{onRequest:[jwtVerify, verifyAccountRole], preValidation: deleteImage('book')}, deleteBook)
 
 }

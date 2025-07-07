@@ -26,6 +26,7 @@ Sistema de Gerenciamento de Biblioteca
 - [x] Deve ser possível visualizar sugestões de livros recém adicionados
 - [x] Deve ser possível atualizar as informações de um perfil de usuário
 - [x] Deve ser possível atualizar a foto de perfil do usuário
+- [x] Deve ser possível deletar um usuário  
 - [x] Deve ser possível cadastrar uma biblioteca
 - [x] Deve ser possível se autenticar pelo email de cadastro da biblioteca
 - [x] Deve ser possível cadastrar um livro

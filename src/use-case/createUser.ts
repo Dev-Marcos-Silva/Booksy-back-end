@@ -34,7 +34,7 @@ export class CreateUserUseCase{
         const accountUser = await this.accountRepository.createAccount({
             email,
             password: password_hast,
-            type: "user"
+            type: "USER"
         })
 
         const user = await this.userRepository.createUser({
