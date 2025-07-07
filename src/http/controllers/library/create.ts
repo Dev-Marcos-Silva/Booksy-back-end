@@ -16,14 +16,14 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
     const userId = id
 
-    if(!userId){
-         reply.status(404).send({message: "USER NAO ENCONTRADO"})
-    }
-
     const image = request.image
 
     if(image === undefined){
         return reply.status(400).send({message: 'Not attributable to image type'})
+    }
+
+    if(!userId){
+        reply.status(404).send({message: 'User not found.'})
     }
 
     const schemaRequest = z.object({

@@ -48,6 +48,7 @@ Sistema de Gerenciamento de Biblioteca
 - [x] Deve ser possível confirmar a conclusão de um livro não entregue
 - [x] Deve ser possível atualizar as informações de um perfil da biblioteca
 - [x] Deve ser possível atualizar a foto de perfil da biblioteca
+- [x] Deve ser possível deletar uma biblioteca
 
 
 ## RNs ( Regras de negócio )

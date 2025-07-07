@@ -11,7 +11,7 @@ export function updateImage(folder: string){
         const image = await request.file()
 
         if(!id){
-            return reply.status(400).send({message: 'File must be an image'})
+            return reply.status(400).send({message: 'Id not found.'})
         }
 
         if(image?.mimetype === 'image'){

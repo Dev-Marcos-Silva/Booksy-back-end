@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeRegisterBookUseCase } from "../../../use-case/factories/make-register-book-use-case";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
 import { deleteImageAfterError } from "../../../utils/delete-image";
+import z from "zod";
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 

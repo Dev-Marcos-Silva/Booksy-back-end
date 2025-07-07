@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeRegisterFavoriteBookUseCase } from "../../../use-case/factories/make-register-favorite-book-use-case";
+import z from "zod";
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
         userId: z.string().uuid(),
-        bookId: z.number().positive().int()
+        bookId: z.string().uuid()
     })
 
     const {userId, bookId} = schemaRequest.parse(request.body)
