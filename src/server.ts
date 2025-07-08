@@ -1,13 +1,18 @@
 import fastify from 'fastify';
-import { join } from 'path';
-import { env } from './env/index';
-import { routers } from './http/router';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
+import { fastifyCors } from '@fastify/cors'
+import { join } from 'path';
+import { env } from './env/index';
+import { routers } from './http/router';
 
 const app = fastify()
+
+app.register(fastifyCors,{
+    origin: "http://localhost:5173"
+})
 
 app.register(fastifyCookie)
 
