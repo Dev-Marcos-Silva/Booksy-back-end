@@ -33,7 +33,7 @@ export class PrismaAccountsRepository implements AccountsRepository {
         return account
     }
 
-    async updateData(accountId: string, email: string, newPassword: string) {
+    async updateData(accountId: string, email: string, newPasswordHash: string) {
 
         const account = await prisma.account.update({
             where: {
@@ -41,7 +41,7 @@ export class PrismaAccountsRepository implements AccountsRepository {
             },
             data: {
                 email,
-                password: newPassword
+                password: newPasswordHash
             }
         })
 

@@ -1,10 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { makeUpdateImageLibraryUseCase } from "../../../use-case/factories/make-update-image-library-use-case";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
+import { deleteImageAfterError } from "../../../utils/delete-image";
 
 export async function avatar(request: FastifyRequest, reply: FastifyReply){
 
-    const libraryId = request.id
+    const {id: libraryId} = request.params as {id: string}
       
     const image = request.image
 
@@ -21,6 +22,8 @@ export async function avatar(request: FastifyRequest, reply: FastifyReply){
         return reply.status(201).send()
 
     }catch(err){
+
+        deleteImageAfterError('library', libraryId)
 
         if(err instanceof LibraryNotFoundError){
             return reply.status(404).send({message: err.message})

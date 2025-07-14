@@ -2,7 +2,7 @@ import { Account, User } from "@prisma/client";
 import { AccountsRepository } from "../repositories/accounts-repositories";
 import { UserRepository } from "../repositories/users-repositories";
 import { UserAlreadyExistsError } from "./err/user-already-exists-err";
-import { compare } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
 import { UserNotFoundError } from "./err/user-not-found-err";
 import { AccountNotFoundError } from "./err/account-not-found-err";
@@ -43,7 +43,7 @@ export class UpdateProfileUserUseCase{
 
         const userExist = await this.accountsRepository.findByEmail(email)
 
-        if(userExist){
+        if(userExist && userExist.email !== account.email){
             throw new UserAlreadyExistsError()
         }
 
@@ -53,7 +53,9 @@ export class UpdateProfileUserUseCase{
             throw new InvalidCredentialsError()
         }
 
-        const newAccount = await this.accountsRepository.updateData(user.accountId, email, newPassword)
+        const newPasswordHash = await hash(newPassword, 6)
+
+        const newAccount = await this.accountsRepository.updateData(user.accountId, email, newPasswordHash)
 
         const newUser = await this.userRepository.updateData(userId, name)
 

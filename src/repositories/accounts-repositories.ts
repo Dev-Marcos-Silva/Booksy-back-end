@@ -8,7 +8,7 @@ export interface AccountsRepository{
 
     getAccountId(accountId: string): Promise<Account | null >
 
-    updateData(accountId: string, email: string, newPassword: string): Promise<Account>
+    updateData(accountId: string, email: string, newPasswordHash: string): Promise<Account>
 
     deleteAccount(accountId: string): Promise<void>
     

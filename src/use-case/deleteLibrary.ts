@@ -1,26 +1,26 @@
 import { AccountsRepository } from "../repositories/accounts-repositories";
-import { UserRepository } from "../repositories/users-repositories";
-import { UserNotFoundError } from "./err/user-not-found-err";
+import { LibraryRepository } from "../repositories/libraries-repositories";
+import { LibraryNotFoundError } from "./err/library-not-found-err";
 
-interface DeleteUserUseCaseRequest{
-    userId: string
+interface DeleteLibraryUseCaseRequest{
+    libraryId: string
 }
 
-export class DeleteUserUseCase{
+export class DeleteLibraryUseCase{
 
     constructor(
-        private userRepository: UserRepository,
+        private libraryRepository: LibraryRepository,
         private accountRepository: AccountsRepository
     ){}
 
-    async execute({userId}: DeleteUserUseCaseRequest){
+    async execute({libraryId}: DeleteLibraryUseCaseRequest){
 
-        const user = await this.userRepository.findById(userId)
+        const library = await this.libraryRepository.findById(libraryId)
 
-        if(!user){
-            throw new UserNotFoundError()
+        if(!library){
+            throw new LibraryNotFoundError()
         }
 
-        await this.accountRepository.deleteAccount(user.accountId)
+        await this.accountRepository.deleteAccount(library.accountId)
     }
 }

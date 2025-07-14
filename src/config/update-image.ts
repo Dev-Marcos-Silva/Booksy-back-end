@@ -33,7 +33,6 @@ export function updateImage(folder: string){
         
         await pipeline(image.file, fs.createWriteStream(filePath))
         
-        request.id = id
         request.image = fieldname 
     }
 } 

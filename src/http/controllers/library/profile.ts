@@ -6,11 +6,7 @@ import z from "zod";
 
 export async function profile(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-            libraryId: z.string().uuid()
-        })
-    
-    const {libraryId} = schemaRequest.parse(request.body)
+    const { id: libraryId } = request.params as { id: string }
 
     try{
 

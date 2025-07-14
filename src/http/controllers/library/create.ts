@@ -5,16 +5,15 @@ import { makeRegisterPhoneLibraryUseCase } from "../../../use-case/factories/mak
 import { LibraryAlreadyExistsError } from "../../../use-case/err/library-already-exists-err";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
 import { makeDeleteUserUseCase } from "../../../use-case/factories/make-delete-user-use-case";
+import { makeDeleteLibraryUseCase } from "../../../use-case/factories/make-delete-library-use-case";
 import { deleteImageAfterError } from "../../../utils/delete-image";
 import z from "zod";
 
 export async function create(request: FastifyRequest, reply: FastifyReply){
 
+    const { id: userId } = request.params as { id: string }
+
     const libraryId = request.id
-
-    const { id } = request.params as { id: string }
-
-    const userId = id
 
     const image = request.image
 
@@ -47,7 +46,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
         const registerAddressLibraryUseCase = makeRegisterAddressLibraryUseCase()
         const registerPhoneLibraryUseCase = makeRegisterPhoneLibraryUseCase()
         const deleteUserUseCase = makeDeleteUserUseCase()
-
+        
         await createLibraryUseCase.execute({libraryId, name, image, email, password, cnpj, description})
 
         await registerAddressLibraryUseCase.execute({city, neighborhood, street, number, libraryId })
@@ -60,7 +59,11 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
 
     }catch(err){
 
-        deleteImageAfterError('library',libraryId)
+        deleteImageAfterError('library', libraryId)
+
+        const deleteLibraryUseCase = makeDeleteLibraryUseCase() 
+
+        await deleteLibraryUseCase.execute({libraryId})
 
         if(err instanceof LibraryAlreadyExistsError){
             reply.status(409).send({message: err.message})

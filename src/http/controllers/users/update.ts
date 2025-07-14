@@ -8,7 +8,7 @@ import { InvalidCredentialsError } from "../../../use-case/err/invalid-credetial
 
 export async function update(request: FastifyRequest, reply: FastifyReply){
 
-    const userId = request.user.sub
+    const { id: userId } = request.params as {id: string}
 
     const schemaRequest = z.object({
         name: z.string(),
