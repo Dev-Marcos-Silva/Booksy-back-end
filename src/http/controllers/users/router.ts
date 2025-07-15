@@ -13,7 +13,7 @@ export function routersUsers(app: FastifyInstance){
 
     app.get('/user/profile/:id',{ onRequest: [jwtVerify]}, profile)
     
-    app.put('/user/update/:id',{ onRequest: [jwtVerify]}, update)
+    app.patch('/user/update/:id',{ onRequest: [jwtVerify]}, update)
 
     app.post('/user/address/:id',{ onRequest: [jwtVerify]}, address)
     // preValidation: manipular a request antes de ir para os controllers

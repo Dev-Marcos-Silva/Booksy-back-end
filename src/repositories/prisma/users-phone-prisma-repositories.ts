@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { PhoneUserRepository } from "../phone-user-repositories";
 import { prisma } from "../../lib";
+import { Phone } from "../../@types/phone-type";
 
 export class PrismaUsersPhoneRepository implements PhoneUserRepository {
 
@@ -20,5 +21,19 @@ export class PrismaUsersPhoneRepository implements PhoneUserRepository {
         })
 
         return userPhone
+    }
+
+    async updatePhone(newPhone: Phone) {
+
+        const {id, phone} = newPhone
+
+        await prisma.phoneUser.update({
+            where: {
+                user_id: id
+            },data:{
+                phone
+            }
+        })
+        
     }
 }

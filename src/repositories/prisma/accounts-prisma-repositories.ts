@@ -33,15 +33,17 @@ export class PrismaAccountsRepository implements AccountsRepository {
         return account
     }
 
-    async updateData(accountId: string, email: string, newPasswordHash: string) {
+    async updateData(newAccount:  Prisma.AccountCreateInput) {
+
+        const {id, email, password} = newAccount
 
         const account = await prisma.account.update({
             where: {
-                id: accountId
+                id
             },
             data: {
                 email,
-                password: newPasswordHash
+                password
             }
         })
 
