@@ -4,11 +4,7 @@ import { makeGetAllBooksUseCase } from "../../../use-case/factories/make-get-all
 
 export async function library(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        libraryId: z.string().uuid()
-    })
-
-    const {libraryId} = schemaRequest.parse(request.body)
+    const {id: libraryId} = request.params as {id: string}
 
     try{
 
@@ -16,7 +12,7 @@ export async function library(request: FastifyRequest, reply: FastifyReply){
 
         const books = await getAllBooksUseCase.execute({libraryId})
 
-        return reply.status(200).send({books})
+        return reply.status(200).send(books)
 
     }catch(err){
 

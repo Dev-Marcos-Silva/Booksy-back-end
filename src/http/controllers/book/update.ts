@@ -4,10 +4,10 @@ import { makeUpdateRegisterBookUseCase } from "../../../use-case/factories/make-
 
 export async function update(request: FastifyRequest, reply: FastifyReply){
 
+    const {id: bookId} = request.params as {id: string}
+
     const schemaRequest = z.object({
-        bookId: z.string().uuid(),
         title: z.string(),
-        image: z.string().nullable(),
         author: z.string(),
         description: z.string(),
         category: z.string(),
@@ -21,7 +21,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply){
         amount: z.number(),
     })
 
-    const {bookId, title, image, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount} = schemaRequest.parse(request.body)
+    const {title, author, description, category, edition, finishing, year_publi, availability, isbn, dimensions, page, amount} = schemaRequest.parse(request.body)
 
     try{
         
@@ -29,8 +29,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply){
 
         await updateRegisterBookUseCase.execute({
             bookId,
-            title, 
-            image, 
+            title,  
             author, 
             description, 
             category, 

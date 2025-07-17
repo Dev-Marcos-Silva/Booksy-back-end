@@ -4,7 +4,7 @@ import { BookNotFoundError } from "../../../use-case/err/book-not-found-err";
 
 export async function image(request: FastifyRequest, reply: FastifyReply){
 
-    const bookId = request.id
+    const {id: bookId} = request.params as {id: string}
 
     const image = request.image
 

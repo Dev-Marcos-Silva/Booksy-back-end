@@ -1,4 +1,5 @@
 import { Library, Prisma } from "@prisma/client";
+import { Account } from "../@types/account-type";
 
 export interface LibraryRepository {
 
@@ -10,7 +11,7 @@ export interface LibraryRepository {
 
     updateImage(libraryId: string, image: string | null): Promise<Library>
     
-    updateData(libraryId: string, name: string): Promise<Library>
+    updateData(newLibrary: Account): Promise<Library>
 
     findByAccouny(accountId: string): Promise<Library | null>
     

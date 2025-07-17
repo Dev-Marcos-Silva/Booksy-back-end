@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { AddressLibraryRepository } from "../address-library-repositories";
 import { prisma } from "../../lib";
+import { Address } from "../../@types/address-type";
 
 export class PrismaLibrariesAddressRepository implements AddressLibraryRepository {
 
@@ -20,5 +21,22 @@ export class PrismaLibrariesAddressRepository implements AddressLibraryRepositor
         })
 
         return libraryAddress
+    }
+
+    async updateAddress(newAddress: Address){
+    
+        const {id, city, neighborhood, number, street} = newAddress
+    
+        await prisma.addressLibrary.update({
+            where: {
+                library_id: id
+            },data:{
+                city,
+                neighborhood,
+                number,
+                street
+            }
+        })
+    
     }
 }

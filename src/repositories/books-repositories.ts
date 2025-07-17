@@ -1,6 +1,6 @@
 import { Book, Prisma } from "@prisma/client";
 import { BookWithStar } from "../@types/book-type";
-
+import { UpdateBook } from "../@types/updateBook-type";
 
 export interface BooksRepository {
 
@@ -20,25 +20,10 @@ export interface BooksRepository {
 
     getAllBook(libraryId: string ): Promise<Book[]>
 
-    updateBook(
-        bookId: string,
-        title: string,
-        image: string | null, 
-        author: string, 
-        description: string, 
-        category: string, 
-        edition: string, 
-        finishing: string, 
-        year_publi: string, 
-        availability: 'available' | 'unavailable',
-        isbn: string, 
-        dimensions: string,
-        page: number,          
-        amount: number, 
-    ): Promise<Book>
+    updateBook(updateBook: UpdateBook): Promise<void>
 
     updateImage(bookId: string, image: string | null): Promise<Book>
 
-    deleteBookById(bookId: string, libraryId: string): Promise<Book[]>
+    deleteBookById(bookId: string): Promise<void>
     
 }

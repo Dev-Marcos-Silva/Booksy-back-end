@@ -1,6 +1,7 @@
 import { Book, Prisma } from "@prisma/client";
 import { BooksRepository } from "../books-repositories";
 import { prisma } from "../../lib";
+import { UpdateBook } from "../../@types/updateBook-type";
 
 export class PrismaBooksRepository implements BooksRepository {
 
@@ -134,44 +135,45 @@ export class PrismaBooksRepository implements BooksRepository {
         return booksWithStar
     }
 
-    async updateBook(
-        bookId: string, 
-        title: string, 
-        image: string | null, 
-        author: string, 
-        description: string, 
-        category: string, 
-        edition: string, 
-        finishing: string, 
-        year_publi: string, 
-        availability: 'available' | 'unavailable',
-        isbn: string, 
-        dimensions: string, 
-        page: number, 
-        amount: number){
+    async updateBook(updateBook: UpdateBook){
 
-            const book = await prisma.book.update({
-                where: {
-                    id: bookId
-                },
-                data: {
-                    title,
-                    image,
-                    author,
-                    description,
-                    category,
-                    edition,
-                    finishing,
-                    year_publi,
-                    availability,
-                    isbn,
-                    dimensions,
-                    page,
-                    amount
-                }
-            })
+        const {
+            bookId,
+            title,
+            author,
+            description,
+            category,
+            edition,
+            finishing,
+            year_publi,
+            availability,
+            isbn,
+            dimensions,
+            page,
+            amount,
+            updated_at
+        } = updateBook
 
-            return book
+        await prisma.book.update({
+            where: {
+                id: bookId
+            },
+            data: {
+                title,
+                author,
+                description,
+                category,
+                edition,
+                finishing,
+                year_publi,
+                availability,
+                isbn,
+                dimensions,
+                page,
+                amount,
+                updated_at
+            }
+        })
     }
 
     async updateImage(bookId: string, image: string | null){
@@ -188,21 +190,12 @@ export class PrismaBooksRepository implements BooksRepository {
         return book
     }
 
-    async deleteBookById(bookId: string, libraryId: string){
+    async deleteBookById(bookId: string){
 
         await prisma.book.delete({
             where: {
                 id: bookId,
-                library_id: libraryId
             }
         })
-
-        const books = await prisma.book.findMany({
-            where: {
-                library_id: libraryId
-            }
-        })
-
-        return books
     }
 }

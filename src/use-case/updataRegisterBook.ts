@@ -1,10 +1,12 @@
-import { Book } from "@prisma/client";
+import { Availability } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
+import { clean } from "../utils/clean-string";
+import { verify } from "../utils/verify-number";
+import { BookNotFoundError } from "./err/book-not-found-err";
 
 interface UpdateRegisterBookUseCaseRequest{
     bookId: string
     title: string
-    image: string | null
     author: string
     description: string
     category: string
@@ -18,10 +20,6 @@ interface UpdateRegisterBookUseCaseRequest{
     amount: number  
 }
 
-interface UpdateRegisterBookUseCaseResponse{
-    book: Book
-}
-
 export class UpdateRegisterBookUseCase{
 
     constructor(
@@ -30,8 +28,7 @@ export class UpdateRegisterBookUseCase{
 
     async execute({ 
         bookId,
-        title,
-        image, 
+        title, 
         author, 
         description, 
         category, 
@@ -42,27 +39,33 @@ export class UpdateRegisterBookUseCase{
         isbn, 
         dimensions, 
         page, 
-        amount,}: UpdateRegisterBookUseCaseRequest): Promise<UpdateRegisterBookUseCaseResponse> {
+        amount,}: UpdateRegisterBookUseCaseRequest): Promise<void> {
 
-        const book = await this.booksRepository.updateBook(
-            bookId,
-            title,
-            image, 
-            author, 
-            description, 
-            category, 
-            edition, 
-            finishing, 
-            year_publi, 
-            availability, 
-            isbn, 
-            dimensions, 
-            page, 
-            amount,
-        ) 
+        const book = await this.booksRepository.getBookById(bookId)
 
-        return{
-            book
+        if(!book){
+            throw new BookNotFoundError()
         }
+
+        const date = new Date()
+
+        const updateBook = {
+            bookId,
+            title: clean(title) ?? book.title, 
+            author: clean(author) ?? book.author , 
+            description: clean(description) ?? book.description, 
+            category: clean(category) ?? book.category, 
+            edition: clean(edition) ?? book.edition, 
+            finishing: clean(finishing) ?? book.finishing, 
+            year_publi: clean(year_publi) ?? book.year_publi, 
+            availability: availability ?? book.availability, 
+            isbn: clean(isbn) ?? book.isbn, 
+            dimensions: clean(dimensions) ?? book.dimensions, 
+            page: verify(page) ?? book.page, 
+            amount: verify(amount) ?? book.amount,
+            updated_at: date.toISOString()
+        }
+
+        await this.booksRepository.updateBook(updateBook)
     }
 }

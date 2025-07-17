@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { LibraryRepository } from "../libraries-repositories";
 import { prisma } from "../../lib";
+import { Account } from "../../@types/account-type";
 
 export class PrismaLibrariesRepository implements LibraryRepository {
 
@@ -47,18 +48,21 @@ export class PrismaLibrariesRepository implements LibraryRepository {
         return library 
     }
 
-    async updateData(libraryId: string, name: string){
+    async updateData(newLibrary: Account){
+
+        const {id, name, updated_at} = newLibrary
         
-        const library = await prisma.library.update({
+        const libraryUpdate = await prisma.library.update({
             where:{
-                id: libraryId
+                id
             },
             data: {
-                name: name
+                name,
+                updated_at
             }
         })
 
-        return library
+        return libraryUpdate
     }
 
     async findByAccouny(accountId: string){

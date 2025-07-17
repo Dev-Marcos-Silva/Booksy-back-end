@@ -17,5 +17,5 @@ export function routersLibrary(app: FastifyInstance){
 
     app.patch('/library/avatar/:id',{onRequest: [jwtVerify, verifyAccountRole], preValidation: updateImage('library')}, avatar)
 
-    app.put('/library/update/:id',{onRequest: [jwtVerify, verifyAccountRole]}, update)
+    app.patch('/library/update/:id',{onRequest: [jwtVerify, verifyAccountRole]}, update)
 }

@@ -5,10 +5,10 @@ import { makeSearchBookTitleOrAuthorUseCase } from "../../../use-case/factories/
 export async function search(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
-        query: z.string()
+           query: z.string()
     })
 
-    const {query} = schemaRequest.parse(request.body)
+    const {query} = schemaRequest.parse(request.query)
 
     try{
 
@@ -16,7 +16,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply){
 
         const {books} = await searchBookTitleOrAuthorUseCase.execute({query})
 
-        return reply.status(200).send({books})
+        return reply.status(200).send(books)
 
     }catch(err){
 

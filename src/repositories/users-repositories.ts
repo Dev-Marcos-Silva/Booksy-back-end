@@ -1,5 +1,5 @@
 import { Prisma, User } from "@prisma/client";
-import { NewUser } from "../@types/user-type";
+import { Account } from "../@types/account-type";
 
 
 export interface UserRepository {
@@ -10,7 +10,7 @@ export interface UserRepository {
 
     updateAvatar(userId: string, avatar: string | null): Promise<User>
 
-    updateData(newUser: NewUser): Promise<User>
+    updateData(newUser: Account): Promise<User>
 
     findByAccouny(accountId: string): Promise<User | null>
  

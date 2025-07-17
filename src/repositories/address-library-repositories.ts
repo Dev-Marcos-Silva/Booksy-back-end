@@ -1,4 +1,5 @@
 import { AddressLibrary, Prisma } from "@prisma/client";
+import { Address } from "../@types/address-type";
 
 export interface AddressLibraryRepository {
 
@@ -6,6 +7,6 @@ export interface AddressLibraryRepository {
     
     getAddress(libraryId: string): Promise<AddressLibrary | null>
 
-    updateAddress(): Promise<void>
+    updateAddress(newAddress: Address): Promise<void>
     
 }

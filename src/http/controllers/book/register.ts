@@ -6,7 +6,7 @@ import z from "zod";
 
 export async function register(request: FastifyRequest, reply: FastifyReply){
 
-    const libraryId = request.user.sub
+    const {id: libraryId} = request.params as {id: string}
 
     const bookId = request.id
 

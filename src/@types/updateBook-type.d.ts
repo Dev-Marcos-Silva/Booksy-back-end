@@ -1,10 +1,9 @@
-import { Availability } from "@prisma/client"
+import { Availability } from "@prisma/client";
 
-export type BookWithStar = {
-    id: string
+export type UpdateBook = {
+    bookId: string
     title: string
     author: string
-    image: string | null
     description: string
     category: string
     edition: string
@@ -15,8 +14,5 @@ export type BookWithStar = {
     dimensions: string
     page: number
     amount: number
-    library_id: string
-    created_at: Date
-    updated_at: Date
-    star: number | null
+    updated_at: string
 }

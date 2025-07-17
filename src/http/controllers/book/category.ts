@@ -8,7 +8,7 @@ export async function category(request: FastifyRequest, reply: FastifyReply){
         category: z.string()
     })
 
-    const {category} = schemaRequest.parse(request.body)
+    const {category} = schemaRequest.parse(request.query)
 
     try{
 
@@ -16,7 +16,7 @@ export async function category(request: FastifyRequest, reply: FastifyReply){
 
         const {books} = await searchBookCategoryUseCase.execute({category})
 
-        return reply.status(200).send({books})
+        return reply.status(200).send(books)
 
     }catch(err){
 

@@ -1,17 +1,17 @@
-import { Account, User } from "@prisma/client";
+import { Account, Library } from "@prisma/client";
 import { AccountsRepository } from "../repositories/accounts-repositories";
-import { UserRepository } from "../repositories/users-repositories";
-import { AddressUserRepository } from "../repositories/address-user-repositories";
-import { PhoneUserRepository } from "../repositories/phone-user-repositories";
-import { UserAlreadyExistsError } from "./err/user-already-exists-err";
 import { compare, hash } from "bcryptjs";
 import { InvalidCredentialsError } from "./err/invalid-credetials-err";
-import { UserNotFoundError } from "./err/user-not-found-err";
 import { AccountNotFoundError } from "./err/account-not-found-err";
 import { clean, validationEmail, validationPhone } from "../utils/clean-string";
+import { LibraryRepository } from "../repositories/libraries-repositories";
+import { AddressLibraryRepository } from "../repositories/address-library-repositories";
+import { PhoneLibraryRepository } from "../repositories/phone-library-repositories";
+import { LibraryNotFoundError } from "./err/library-not-found-err";
+import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
 
-interface UpdateProfileUserUseCaseRequest{
-    userId: string
+interface UpdateProfileLibraryUseCaseRequest{
+    libraryId: string
     name: string | undefined 
     email: string | undefined
     newPassword: string | undefined
@@ -23,43 +23,43 @@ interface UpdateProfileUserUseCaseRequest{
     phone: string | undefined
 }
 
-interface UpdateProfileUserUseCaseResponse{
-    updateUser: User
+interface UpdateProfileLibraryUseCaseResponse{
+    updateLibrary: Library
     updateAccount: Account
 }
 
-export class UpdateProfileUserUseCase{
+export class UpdateProfileLibraryUseCase{
 
     constructor(
-        private userRepository: UserRepository,
+        private libraryRepository: LibraryRepository,
         private accountsRepository: AccountsRepository,
-        private addressUserRepository: AddressUserRepository,
-        private phoneUserRepository: PhoneUserRepository,
+        private addressLibraryRepository: AddressLibraryRepository,
+        private phoneLibraryRepository: PhoneLibraryRepository,
     ){}
 
-    async execute({userId, name, email, newPassword, oldPassword, city, neighborhood, number, street, phone}: UpdateProfileUserUseCaseRequest ): Promise<UpdateProfileUserUseCaseResponse> {
+    async execute({libraryId, name, email, newPassword, oldPassword, city, neighborhood, number, street, phone}: UpdateProfileLibraryUseCaseRequest ): Promise<UpdateProfileLibraryUseCaseResponse> {
 
-        const user = await this.userRepository.findById(userId)
+        const library = await this.libraryRepository.findById(libraryId)
 
-        if(!user){
-            throw new UserNotFoundError()
+        if(!library){
+            throw new LibraryNotFoundError()
         }
 
-        const account = await this.accountsRepository.getAccountId(user.accountId)
+        const account = await this.accountsRepository.getAccountId(library.accountId)
 
         if(!account){
             throw new AccountNotFoundError()
         }
 
-        const address = await this.addressUserRepository.getAddress(userId)
+        const address = await this.addressLibraryRepository.getAddress(libraryId)
 
         if(!address){
             throw new Error('No address')
         }
 
-        const userPhone = await this.phoneUserRepository.getPhone(userId)
+        const libraryPhone = await this.phoneLibraryRepository.getPhone(libraryId)
 
-        if(!userPhone){
+        if(!libraryPhone){
             throw new Error('No phone')
         }
 
@@ -69,10 +69,10 @@ export class UpdateProfileUserUseCase{
             throw new InvalidCredentialsError()
         }
 
-        const userExist = await this.accountsRepository.findByEmail(email)
+        const libraryExist = await this.accountsRepository.findByEmail(email)
 
-        if(userExist && userExist.email !== account.email){
-            throw new UserAlreadyExistsError()
+        if(libraryExist && libraryExist.email !== account.email){
+            throw new LibraryAlreadyExistsError()
         }
 
         let password: string | null = null
@@ -94,33 +94,33 @@ export class UpdateProfileUserUseCase{
 
         let date = new Date()
         
-        const newUser = {
-            id: user.id,
-            name: clean(name) ?? user.name,
+        const newLibrary = {
+            id: library.id,
+            name: clean(name) ?? library.name,
             updated_at: date.toISOString()
         }
 
-        const updateUser = await this.userRepository.updateData(newUser)
+        const updateLibrary = await this.libraryRepository.updateData(newLibrary)
 
         const newAddress = {
-            id: user.id,
+            id: library.id,
             city: clean(city) ?? address.city,
             neighborhood: clean(neighborhood) ?? address.neighborhood,
             street: clean(street) ?? address.street,
             number: clean(number) ?? address.number
         }
 
-        await this.addressUserRepository.updateAddress(newAddress)
+        await this.addressLibraryRepository.updateAddress(newAddress)
 
          const newPhone = {
-            id: user.id,
-            phone: validationPhone(phone) ?? userPhone.phone
+            id: library.id,
+            phone: validationPhone(phone) ?? libraryPhone.phone
         }
 
-        await this.phoneUserRepository.updatePhone(newPhone)
+        await this.phoneLibraryRepository.updatePhone(newPhone)
         
         return {
-            updateUser,
+            updateLibrary,
             updateAccount
         }
     }

@@ -12,18 +12,23 @@ export async function update(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
         name: z.string(),
-        email: z.string().email(),
-        newPassword: z.string().min(6),
-        oldPassword: z.string().min(6),
+        email: z.string(),
+        newPassword: z.string(),
+        oldPassword: z.string(),
+        city: z.string(),
+        neighborhood: z.string(),
+        street: z.string(),
+        number: z.string(),
+        phone: z.string(),
     })
 
-    const {name, email, newPassword, oldPassword} = schemaRequest.parse(request.body)
+    const {name, email, newPassword, oldPassword, city, neighborhood, number, phone, street} = schemaRequest.parse(request.body)
 
     try{
 
         const updateProfileLibraryUseCase = makeUpdateProfileLibraryUseCase()
 
-        await updateProfileLibraryUseCase.execute({libraryId, name, email, newPassword, oldPassword})
+        await updateProfileLibraryUseCase.execute({libraryId, name, email, newPassword, oldPassword, city, neighborhood, number, phone, street })
 
         return reply.status(201).send()
 
