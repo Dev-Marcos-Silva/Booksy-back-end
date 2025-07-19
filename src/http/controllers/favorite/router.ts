@@ -8,7 +8,7 @@ export function routersFavorite(app: FastifyInstance){
 
    app.post('/favorite/register',{onRequest: [jwtVerify]}, register)
 
-   app.get('/favorite/get',{onRequest: [jwtVerify]}, favorite)
+   app.get('/favorite/get/:id',{onRequest: [jwtVerify]}, favorite)
 
-   app.delete('/favorite/delete',{onRequest: [jwtVerify]}, deleteFavorite)
+   app.delete('/favorite/delete/:id',{onRequest: [jwtVerify]}, deleteFavorite)
 }

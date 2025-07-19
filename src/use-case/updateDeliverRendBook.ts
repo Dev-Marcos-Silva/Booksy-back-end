@@ -25,10 +25,13 @@ export class UpdateDeliverRendBookUseCase{
 
         const { days } = rendBook
 
+        const returnData =  new Date(dataDeliver)
+        returnData.setDate(returnData.getDate() + days)
+
         const book = await this.rendBookRepository.updateOrderDeliver(
             rentBookId,
             dataDeliver,
-            days
+            returnData
         )
 
         return{

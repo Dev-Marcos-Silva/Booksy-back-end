@@ -8,4 +8,6 @@ export interface FavoriteBookRepository{
 
     deleteFavoriteBook(userId: string, favoriteBookId: number): Promise<FavoriteBook[]>
 
+    getFavoriteBook(favoriteBookId: number): Promise<FavoriteBook | null>
+
 }

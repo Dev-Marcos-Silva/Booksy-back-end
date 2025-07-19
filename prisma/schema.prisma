@@ -135,11 +135,13 @@ enum Visibility{
 enum Complete{
   true
   false
+  undefine
 }
 
 enum Accept{
   true
   false
+  undefine
 }
 
 
@@ -152,9 +154,9 @@ model RentBook{
   book_id         String 
   library_id      String 
   user_id         String 
-  is_complete     Complete @default(false)
-  user_visibility Visibility @default(false)
-  is_accepted     Accept @default(false)
+  is_complete     Complete @default(undefine)
+  user_visibility Visibility @default(true)
+  is_accepted     Accept @default(undefine)
 
   book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
   library         Library @relation(fields: [library_id], references: [id], onDelete: Cascade)
@@ -181,7 +183,7 @@ model Comment{
   comment         String
   created_at      DateTime @default(now())
   book_id         String
-  user_id         String
+  user_id         String 
 
   book            Book @relation(fields: [book_id], references: [id], onDelete: Cascade)
   user            User @relation(fields: [user_id], references: [id], onDelete: Cascade)

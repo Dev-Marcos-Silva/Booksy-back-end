@@ -4,11 +4,7 @@ import { makeFetchRentedBookHistoryUseCase } from "../../../use-case/factories/m
 
 export async function history(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        userId: z.string().uuid()
-    })
-
-    const {userId} = schemaRequest.parse(request.body)
+    const { id: userId } = request.params as {id: string}
 
     try{
 

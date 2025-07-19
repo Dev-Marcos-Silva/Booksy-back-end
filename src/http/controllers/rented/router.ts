@@ -14,19 +14,19 @@ export function routersRentedBook(app: FastifyInstance){
 
     app.post('/rented/book',{onRequest: [jwtVerify]}, register)
 
-    app.get('/user/rented/book',{onRequest: [jwtVerify]}, user)
+    app.get('/user/rented/book/:id',{onRequest: [jwtVerify]}, user)
 
-    app.get('/user/history',{onRequest: [jwtVerify]}, history)
+    app.get('/user/history/:id',{onRequest: [jwtVerify]}, history)
 
-    app.put('/user/delete',{onRequest: [jwtVerify]}, deleteHistory)
+    app.delete('/user/delete/:id',{onRequest: [jwtVerify]}, deleteHistory)
 
-    app.get('/library/rented/book',{onRequest: [jwtVerify, verifyAccountRole]}, library)
+    app.get('/library/rented/book/:id',{onRequest: [jwtVerify, verifyAccountRole]}, library)
 
-    app.put('/library/accept',{onRequest: [jwtVerify, verifyAccountRole]}, accept)
+    app.put('/library/accept/:id',{onRequest: [jwtVerify, verifyAccountRole]}, accept)
 
-    app.put('/library/deliver',{onRequest: [jwtVerify, verifyAccountRole]}, deliver)
+    app.put('/library/deliver/:id',{onRequest: [jwtVerify, verifyAccountRole]}, deliver)
 
-    app.put('/library/complete',{onRequest: [jwtVerify, verifyAccountRole]}, complete)
+    app.put('/library/complete/:id',{onRequest: [jwtVerify, verifyAccountRole]}, complete)
 
 
 

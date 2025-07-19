@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Assessment, Prisma } from "@prisma/client";
 import { BookAssessmentRepository } from "../books-assessment-repositories";
 import { prisma } from "../../lib";
 
@@ -20,5 +20,18 @@ export class PrismaBooksAssessmentRepository implements BookAssessmentRepository
         })
 
         return assessments
+    }
+
+    async getUserAssessment(bookId: string, userId: string) {
+
+        const assessment = await prisma.assessment.findFirst({
+            where: {
+                book_id: bookId,
+                user_id: userId
+            }
+        })
+
+        return assessment
+        
     }
 }

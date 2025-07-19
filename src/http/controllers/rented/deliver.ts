@@ -1,15 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeUpdateDeliverRendBookUseCase } from "../../../use-case/factories/make-update-deliver-rented-book-use-case";
 
 export async function deliver(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        rentBookId: z.number().positive().int(),
-        dataDeliver: z.date()
-    })
+    const { id } = request.params as { id: number}
 
-    const {rentBookId, dataDeliver} = schemaRequest.parse(request.body)
+    const rentBookId = Number(id)
+
+    const dataDeliver = new Date()
 
     try{
 

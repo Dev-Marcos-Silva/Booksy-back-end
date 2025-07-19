@@ -4,19 +4,21 @@ import { makeUpdateCompleteRendBookUseCase } from "../../../use-case/factories/m
 
 export async function complete(request: FastifyRequest, reply: FastifyReply){
 
+    const { id } = request.params as { id: number}
+
+    const rentBookId = Number(id)
+
     const schemaRequest = z.object({
-        rentBookId: z.number().positive().int(),
         isComplete: z.enum(['true', 'false']),
-        dataComplete: z.date()
     })
 
-    const {rentBookId, isComplete, dataComplete} = schemaRequest.parse(request.body)
+    const {isComplete} = schemaRequest.parse(request.body)
 
     try{
 
         const updateCompleteRendBookUseCase = makeUpdateCompleteRendBookUseCase()
 
-        await updateCompleteRendBookUseCase.execute({rentBookId, isComplete, dataComplete})
+        await updateCompleteRendBookUseCase.execute({rentBookId, isComplete})
 
         return reply.status(200).send()
 

@@ -7,5 +7,5 @@ export function routersAssessment(app: FastifyInstance){
 
     app.post('/assessment/register',{onRequest: [jwtVerify]}, register)
     
-    app.get('/assessment/get',{onRequest: [jwtVerify]}, assessments)
+    app.get('/assessment/get/:id',{onRequest: [jwtVerify]}, assessments)
 }

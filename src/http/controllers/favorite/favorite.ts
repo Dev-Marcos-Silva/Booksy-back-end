@@ -1,14 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeFetchFavoriteBookUseCase } from "../../../use-case/factories/make-fetch-favorite-book-use-case";
+import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
 
 export async function favorite(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        userId: z.string().uuid(),
-    })
-
-    const {userId} = schemaRequest.parse(request.body)
+    const {id: userId} = request.params as {id: string}
 
     try{
 
@@ -19,6 +15,10 @@ export async function favorite(request: FastifyRequest, reply: FastifyReply){
         return reply.status(200).send({favoriteBook})
 
     }catch(err){
+
+        if(err instanceof UserNotFoundError){
+            return reply.status(404).send({message: err.message})
+        }
 
         throw err
     }

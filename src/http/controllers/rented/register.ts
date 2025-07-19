@@ -7,7 +7,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
 
     const schemaRequest = z.object({
         days: z.number().positive().int(),
-        bookId: z.number().positive().int(),
+        bookId: z.string().uuid(),
         userId: z.string().uuid(),
         libraryId: z.string().uuid(),
     })

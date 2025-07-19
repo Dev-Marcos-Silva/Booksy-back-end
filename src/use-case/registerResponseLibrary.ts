@@ -1,5 +1,8 @@
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryResponseRepository } from "../repositories/library-response-repositories";
 import { Response } from "@prisma/client";
+import { LibraryNotFoundError } from "./err/library-not-found-err";
+import { ResponseAlreadyExist } from "./err/response-already-exists-err";
 
 interface RegisterResponseLibraryUseCaseRequest{
     text: string
@@ -13,10 +16,25 @@ interface RegisterResponseLibraryUseCaseResponse{
 
 export class RegisterResponseLibraryUseCase{
 
-    constructor(private libraryResponseRepository: LibraryResponseRepository ){}
+    constructor(
+        private libraryRepository: LibraryRepository,
+        private libraryResponseRepository: LibraryResponseRepository
+    ){}
 
     async execute({libraryId, commentId, text}: RegisterResponseLibraryUseCaseRequest ): Promise<RegisterResponseLibraryUseCaseResponse> {
 
+        const library = await this.libraryRepository.findById(libraryId)
+
+        if(!library){
+            throw new LibraryNotFoundError()
+        }
+
+        const responseExist = await this.libraryResponseRepository.getResponse(commentId)
+
+        if(responseExist){
+            throw new ResponseAlreadyExist()
+        }
+        
         const response = await this.libraryResponseRepository.register({
             response: text,
             comment:{

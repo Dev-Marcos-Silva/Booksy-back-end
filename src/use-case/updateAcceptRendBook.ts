@@ -6,23 +6,19 @@ interface UpdateAcceptRendBookUseCaseRequest{
     isAccepted: 'true' | 'false'
 }
 
-interface UpdateAcceptRendBookUseCaseResponse{
-    book: RentBook
-}
-
 export class UpdateAcceptRendBookUseCase{
 
     constructor(private rendBookRepository: RentedBookRepository){}
 
-    async execute({ rentBookId, isAccepted }: UpdateAcceptRendBookUseCaseRequest): Promise<UpdateAcceptRendBookUseCaseResponse> {
+    async execute({ rentBookId, isAccepted }: UpdateAcceptRendBookUseCaseRequest): Promise<void> {
         
-        const book = await this.rendBookRepository.updateOrderAccepted(
-            rentBookId,
-            isAccepted
-        )
-
-        return{
-            book
+        if(isAccepted === 'true'){
+            await this.rendBookRepository.updateOrderAccepted(rentBookId,isAccepted)
         }
+
+        if(isAccepted == 'false'){
+            await this.rendBookRepository.deleteRendBookLibrary(rentBookId)
+        }
+        
     }
 }

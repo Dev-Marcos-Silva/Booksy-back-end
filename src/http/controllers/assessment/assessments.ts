@@ -4,19 +4,15 @@ import { makeGetBooksAssessmentUseCase } from "../../../use-case/factories/make-
 
 export async function assessments(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        bookId: z.string().uuid()
-    })
-
-    const {bookId} = schemaRequest.parse(request.body)
+    const {id: bookId} = request.params as {id: string}
 
     try{
 
         const getBooksAssessmentUseCase = makeGetBooksAssessmentUseCase()
 
-        const assessments = await getBooksAssessmentUseCase.execute({bookId})
+        const {assessments} = await getBooksAssessmentUseCase.execute({bookId})
 
-        return reply.status(200).send({assessments})
+        return reply.status(200).send(assessments)
 
     }catch(err){
 

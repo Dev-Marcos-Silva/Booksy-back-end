@@ -41,4 +41,15 @@ export class PrismaBooksFavoriteRepository implements FavoriteBookRepository {
 
         return favoriteBooks
     }
+
+    async getFavoriteBook(favoriteBookId: number){
+
+        const favorite = await prisma.favoriteBook.findUnique({
+            where:{
+                id: favoriteBookId
+            }
+        })
+
+        return favorite 
+    }
 }

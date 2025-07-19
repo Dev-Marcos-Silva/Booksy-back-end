@@ -35,6 +35,7 @@ Sistema de Gerenciamento de Biblioteca
 - [x] Deve ser possível excluir um livro cadastrado 
 - [x] Deve ser possível obter as informações do livro cadastrado
 - [x] Deve ser possível responde os comentarios do livro
+- [x] Deve ser possível visualizar as respostas da biblioteca
 - [x] Deve ser possível visualizar os pedidos de livros
 - [x] Deve ser possivel visualizar o perfil do usuário
 - [x] Deve ser possivel negar o pedido de livro 

@@ -39,7 +39,8 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
             where: {
                 user_id: userId,
                 AND: {
-                    is_complete: 'true'
+                    is_complete: 'true',
+                    user_visibility: 'true'
                 }
             }
         })
@@ -75,6 +76,15 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
         return rentedBook
     }
 
+    async deleteRendBookLibrary(rentBookId: number): Promise<void> {
+        
+        await prisma.rentBook.delete({
+            where: {
+                id: rentBookId
+            }
+        })
+    }
+
     async updateOrderAccepted(rentBookId: number, is_accepted: 'true' | 'false' ) { 
         
         const rentedBook = await prisma.rentBook.update({
@@ -85,11 +95,9 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
                 is_accepted: is_accepted
             }
         })
-
-        return rentedBook
     }
 
-    async updateOrderDeliver(rentBookId: number, dataDeliver: Date, days: number) {
+    async updateOrderDeliver(rentBookId: number, dataDeliver: Date, returnData: Date) {
 
         
         const rentedBook = await prisma.rentBook.update({
@@ -97,7 +105,7 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
                 id: rentBookId
             },
             data:{
-                days: days,
+                return_data: returnData,
                 delivery_data: dataDeliver
             }
         })
@@ -105,7 +113,7 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
         return rentedBook
     }
 
-    async updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false', dataComplete: Date) {
+    async updatrOrderComplete(rentBookId: number, isComplete: 'true' | 'false') {
         
         const rentedBook = await prisma.rentBook.update({
             where: {
@@ -113,7 +121,6 @@ export class PrismaRentedBooksRepository implements RentedBookRepository {
             },
             data:{
                 is_complete: isComplete,
-                return_data: dataComplete
             }
         })
 

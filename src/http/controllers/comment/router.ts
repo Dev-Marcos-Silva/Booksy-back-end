@@ -7,5 +7,5 @@ export function routersComments(app: FastifyInstance){
 
    app.post('/comment/register',{onRequest: [jwtVerify]}, register)
 
-   app.get('/comment/get',{onRequest: [jwtVerify]}, comments)
+   app.get('/comment/get/:id',{onRequest: [jwtVerify]}, comments)
 }

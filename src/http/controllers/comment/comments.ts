@@ -4,11 +4,7 @@ import { makeGetBooksCommentUseCase } from "../../../use-case/factories/make-get
 
 export async function comments(request: FastifyRequest, reply: FastifyReply){
 
-    const schemaRequest = z.object({
-        bookId: z.string().uuid()
-    })
-
-    const {bookId} = schemaRequest.parse(request.body)
+    const {id: bookId} = request.params as {id: string}
 
     try{
 
@@ -16,7 +12,7 @@ export async function comments(request: FastifyRequest, reply: FastifyReply){
 
         const {comments} = await getBooksCommentUseCase.execute({bookId})
 
-        return reply.status(200).send({comments})
+        return reply.status(200).send(comments)
 
     }catch(err){
 

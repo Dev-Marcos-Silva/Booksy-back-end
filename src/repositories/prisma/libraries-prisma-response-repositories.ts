@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Response } from "@prisma/client";
 import { LibraryResponseRepository } from "../library-response-repositories";
 import { prisma } from "../../lib";
 
@@ -9,5 +9,17 @@ export class PrismaLibrarisResponseRepository implements LibraryResponseReposito
         const response = await prisma.response.create({data})
 
         return response
+    }
+
+    async getResponse(commentId: number) {
+
+        const response = await prisma.response.findFirst({
+            where:{
+                comment_id: commentId
+            }
+        })
+
+        return response
+        
     }
 }

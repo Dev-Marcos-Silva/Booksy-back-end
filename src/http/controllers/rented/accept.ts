@@ -4,12 +4,15 @@ import { makeUpdateAcceptRendBookUseCase } from "../../../use-case/factories/mak
 
 export async function accept(request: FastifyRequest, reply: FastifyReply){
 
+    const { id } = request.params as { id: number}
+
+    const rentBookId = Number(id)
+
     const schemaRequest = z.object({
-        rentBookId: z.number().positive().int(),
         isAccepted: z.enum(['true', 'false'])
     })
 
-    const {rentBookId, isAccepted} = schemaRequest.parse(request.body)
+    const {isAccepted} = schemaRequest.parse(request.body)
 
     try{
 
