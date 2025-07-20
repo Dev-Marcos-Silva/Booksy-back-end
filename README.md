@@ -56,7 +56,7 @@ Sistema de Gerenciamento de Biblioteca
 
 - [ ] O usuário só pode definir no máximo 60 dias para entregar o livro
 - [x] O usuário não pode se cadastrar com o email duplicado
-- [ ] Os 60 dias para entragar o livro só vão contar a partir da entregar do livro ao usuário
+- [x] Os 60 dias para entragar o livro só vão contar a partir da entregar do livro ao usuário
 - [ ] Os pedidos enviados para a biblioteca vão sumir se não respondido em 24horas
 - [x] Apenas a biblioteca pode interagir com os pedidos
 
