@@ -4,6 +4,7 @@ import { UserRepository } from "../repositories/users-repositories";
 import { UserNotFoundError } from "./err/user-not-found-err";
 
 interface RegisterPhoneUserUseCaseRequest{
+    ddd: string
     phone: string
     userId: string
 }
@@ -19,7 +20,7 @@ export class RegisterPhoneUserUseCase{
         private userRepository: UserRepository
     ){}
     
-    async execute({phone, userId }: RegisterPhoneUserUseCaseRequest ): Promise<RegisterPhoneUserUseCaseResponse> {
+    async execute({ddd, phone, userId }: RegisterPhoneUserUseCaseRequest ): Promise<RegisterPhoneUserUseCaseResponse> {
         
         const user = await this.userRepository.findById(userId)
 
@@ -28,6 +29,7 @@ export class RegisterPhoneUserUseCase{
         }
 
         const phoneUser = await this.phoneUserRepository.creataPhone({
+            ddd,
             phone,
             user: {
                 connect:{id: userId}

@@ -9,6 +9,7 @@ datasource db {
 
 model PhoneUser{
   id              Int @id @default(autoincrement())
+  ddd             String
   phone           String 
   user_id         String @unique
 
@@ -19,6 +20,7 @@ model PhoneUser{
 
 model AddressUser{
   id              Int @id @default(autoincrement())
+  cep             String
   city            String
   neighborhood    String
   street          String
@@ -55,7 +57,6 @@ model Library{
   name            String 
   image           String?
   cnpj            String @unique
-  description     String
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
   accountId       String @unique
@@ -73,6 +74,7 @@ model Library{
 
 model PhoneLibrary{
   id              Int @id @default(autoincrement())
+  ddd             String
   phone           String
   library_id      String @unique
 
@@ -83,6 +85,7 @@ model PhoneLibrary{
 
 model AddressLibrary{
   id              Int @id @default(autoincrement())
+  cep             String
   city            String
   neighborhood    String
   street          String

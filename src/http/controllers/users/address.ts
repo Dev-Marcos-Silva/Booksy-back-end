@@ -13,14 +13,16 @@ export async function address(request: FastifyRequest , reply: FastifyReply ){
     }
 
     const schemaRequest = z.object({
+        cep: z.string(),
         city: z.string(),
         neighborhood: z.string(),
         street: z.string(),
         number: z.string(),
+        ddd: z.string(),
         phone: z.string()
     })
 
-    const {city, neighborhood, street, number, phone } = schemaRequest.parse(request.body)
+    const {cep, city, neighborhood, street, number, ddd, phone } = schemaRequest.parse(request.body)
 
     try{
 
@@ -28,9 +30,9 @@ export async function address(request: FastifyRequest , reply: FastifyReply ){
 
         const registerPhoneUserUseCase = makeRegisterPhoneUserUseCase()
 
-        await registerAddressUserUseCase.execute({city, neighborhood, number, street, userId})
+        await registerAddressUserUseCase.execute({cep, city, neighborhood, number, street, userId})
 
-        await registerPhoneUserUseCase.execute({phone, userId})
+        await registerPhoneUserUseCase.execute({ddd, phone, userId})
 
         return reply.status(201).send()
 

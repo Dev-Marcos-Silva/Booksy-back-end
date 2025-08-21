@@ -1,17 +1,20 @@
 import { Library } from "@prisma/client";
-import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryAlreadyExistsError } from "./err/library-already-exists-err";
-import { hash } from "bcryptjs";
+import { UserNotFoundError } from "./err/user-not-found-err";
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { AccountsRepository } from "../repositories/accounts-repositories";
+import { UserRepository } from "../repositories/users-repositories";
+import { hash } from "bcryptjs";
+import { makeDeleteUserUseCase } from "./factories/make-delete-user-use-case";
 
 interface CreateLibraryUseCaseRequest{
     libraryId: string
+    userId: string
     name: string
     image: string | null
     email: string
     password: string
     cnpj: string
-    description: string
 }
 
 interface CreateLibraryUseCaseResponse{
@@ -22,18 +25,31 @@ export class CreateLibraryUseCase{
     
     constructor(
         private libraryRepository: LibraryRepository,
-        private accountRepository: AccountsRepository
+        private accountRepository: AccountsRepository,
+        private userRepository: UserRepository
     ){}
 
-    async execute({libraryId, name, image, email, password, cnpj, description }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
-
+    async execute({libraryId, userId, name, image, email, password, cnpj }: CreateLibraryUseCaseRequest ): Promise<CreateLibraryUseCaseResponse> {
+        
+        const deleteUserUseCase = makeDeleteUserUseCase()
+        const userExist = await this.userRepository.findById(userId)
         const libraryExist = await this.accountRepository.findByEmail(email)
         const cnpjExist = await this.libraryRepository.findByCnpj(cnpj)
+
+        if(!userExist){
+            throw new UserNotFoundError()
+        }
+
+        const { accountId } = userExist
+
+        const user = await this.accountRepository.getAccountId(accountId)
         
-        if(libraryExist || cnpjExist){
+        if(libraryExist && libraryExist.email !== user?.email || cnpjExist){
             throw new LibraryAlreadyExistsError()
         }
-        
+
+        await deleteUserUseCase.execute({userId}) 
+
         const password_hast = await hash(password, 6)
         
         const accountLibrary = await this.accountRepository.createAccount({
@@ -49,7 +65,6 @@ export class CreateLibraryUseCase{
             name,
             image,
             cnpj,
-            description,
             account: {
                 connect: {id: accountLibrary.id}
             }
@@ -58,5 +73,6 @@ export class CreateLibraryUseCase{
         return{
             library
         } 
+
     }
 }

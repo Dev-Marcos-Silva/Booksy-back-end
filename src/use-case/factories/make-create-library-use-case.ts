@@ -1,5 +1,6 @@
 import { PrismaAccountsRepository } from "../../repositories/prisma/accounts-prisma-repositories";
 import { PrismaLibrariesRepository } from "../../repositories/prisma/libraries-prisma-repositories";
+import { PrismaUsersRespository } from "../../repositories/prisma/users-prisma-repositories";
 import { CreateLibraryUseCase } from "../createLibrary";
 
 export function makeCreateLibraryUseCase(){
@@ -8,7 +9,9 @@ export function makeCreateLibraryUseCase(){
 
     const accountRepository = new PrismaAccountsRepository()
 
-    const createLibraryUseCase = new CreateLibraryUseCase(libraryRepository, accountRepository)
+    const userRepository = new PrismaUsersRespository()
+
+    const createLibraryUseCase = new CreateLibraryUseCase(libraryRepository, accountRepository, userRepository)
 
     return createLibraryUseCase
 }

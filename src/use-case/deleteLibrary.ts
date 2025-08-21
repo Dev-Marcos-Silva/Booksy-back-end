@@ -17,10 +17,8 @@ export class DeleteLibraryUseCase{
 
         const library = await this.libraryRepository.findById(libraryId)
 
-        if(!library){
-            throw new LibraryNotFoundError()
+        if(library){
+            await this.accountRepository.deleteAccount(library.accountId)
         }
-
-        await this.accountRepository.deleteAccount(library.accountId)
     }
 }

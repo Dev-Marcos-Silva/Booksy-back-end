@@ -4,11 +4,12 @@ import { UserRepository } from "../repositories/users-repositories";
 import { UserNotFoundError } from "./err/user-not-found-err";
 
 interface RegisterAddressUserUseCaseRequest{
-    city: string;
-    neighborhood: string;
-    street: string;
-    number: string;
-    userId: string;
+    cep: string
+    city: string
+    neighborhood: string
+    street: string
+    number: string
+    userId: string
 }
 
 interface RegisterAddressUserUseCaseResponse{
@@ -22,7 +23,7 @@ export class RegisterAddressUserUseCase{
         private userRepository: UserRepository    
     ){}
 
-    async execute({city, neighborhood, street, number, userId  }: RegisterAddressUserUseCaseRequest ): Promise<RegisterAddressUserUseCaseResponse> {
+    async execute({cep, city, neighborhood, street, number, userId  }: RegisterAddressUserUseCaseRequest ): Promise<RegisterAddressUserUseCaseResponse> {
 
         const userExists = await this.userRepository.findById(userId)
 
@@ -31,6 +32,7 @@ export class RegisterAddressUserUseCase{
         }
 
         const userAddress = await this.addressUserRepository.createAddress({
+            cep,
             city,
             neighborhood,
             street,

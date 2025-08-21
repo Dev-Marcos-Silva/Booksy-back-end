@@ -4,6 +4,7 @@ import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface RegisterAddressLibraryUseCaseRequest{
+    cep: string,
     city: string;
     neighborhood: string;
     street: string;
@@ -22,7 +23,7 @@ export class RegisterAddressLibraryUseCase{
         private libraryRepository: LibraryRepository    
     ){}
 
-    async execute({city, neighborhood, street, number, libraryId  }: RegisterAddressLibraryUseCaseRequest ): Promise<RegisterAddressLibraryUseCaseResponse> {
+    async execute({cep, city, neighborhood, street, number, libraryId  }: RegisterAddressLibraryUseCaseRequest ): Promise<RegisterAddressLibraryUseCaseResponse> {
 
         const libraryExists = await this.libraryRepository.findById(libraryId)
 
@@ -31,6 +32,7 @@ export class RegisterAddressLibraryUseCase{
         }
 
         const libraryAddress = await this.addressLibraryRepository.createAddress({
+            cep,
             city,
             neighborhood,
             street,

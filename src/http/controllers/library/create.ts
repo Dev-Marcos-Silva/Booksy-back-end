@@ -4,7 +4,7 @@ import { makeRegisterAddressLibraryUseCase } from "../../../use-case/factories/m
 import { makeRegisterPhoneLibraryUseCase } from "../../../use-case/factories/make-register-phone-library-use-case";
 import { LibraryAlreadyExistsError } from "../../../use-case/err/library-already-exists-err";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
-import { makeDeleteUserUseCase } from "../../../use-case/factories/make-delete-user-use-case";
+import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
 import { makeDeleteLibraryUseCase } from "../../../use-case/factories/make-delete-library-use-case";
 import { deleteImageAfterError } from "../../../utils/delete-image";
 import z from "zod";
@@ -29,31 +29,29 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
         name: z.string(),
         email: z.string().email(),
         password: z.string().min(6),
+        ddd: z.string(),
+        phone: z.string(),
         cnpj: z.string(),
-        description: z.string(),
+        cep: z.string(),
         city: z.string(),
         neighborhood: z.string(),
         street: z.string(),
         number: z.string(),
-        phone: z.string()
     })
 
-    const {name, email, password, cnpj, description, city, neighborhood, street, number, phone} = schemaRequest.parse(request.body)
+    const {name, email, password, cep, cnpj, city, neighborhood, street, number, ddd, phone} = schemaRequest.parse(request.body)
 
     try{
 
         const createLibraryUseCase = makeCreateLibraryUseCase()
         const registerAddressLibraryUseCase = makeRegisterAddressLibraryUseCase()
         const registerPhoneLibraryUseCase = makeRegisterPhoneLibraryUseCase()
-        const deleteUserUseCase = makeDeleteUserUseCase()
         
-        await createLibraryUseCase.execute({libraryId, name, image, email, password, cnpj, description})
+        await createLibraryUseCase.execute({libraryId, userId, name, image, email, password, cnpj})
 
-        await registerAddressLibraryUseCase.execute({city, neighborhood, street, number, libraryId })
+        await registerAddressLibraryUseCase.execute({cep, city, neighborhood, street, number, libraryId })
 
-        await registerPhoneLibraryUseCase.execute({phone, libraryId})
-
-        await deleteUserUseCase.execute({userId})
+        await registerPhoneLibraryUseCase.execute({ddd, phone, libraryId})
         
         reply.status(201).send()
 
@@ -68,7 +66,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply){
         if(err instanceof LibraryAlreadyExistsError){
             reply.status(409).send({message: err.message})
         }
-        else if(err instanceof LibraryNotFoundError){
+        else if(err instanceof LibraryNotFoundError || err instanceof UserNotFoundError ){
             reply.status(404).send({message: err.message})
         }
 

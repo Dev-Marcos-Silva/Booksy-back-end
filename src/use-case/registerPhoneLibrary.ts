@@ -4,6 +4,7 @@ import { PhoneLibraryRepository } from "../repositories/phone-library-repositori
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface RegisterPhoneLibraryUseCaseRequest{
+    ddd: string
     phone: string
     libraryId: string
 }
@@ -19,7 +20,7 @@ export class RegisterPhoneLibraryUseCase{
         private libraryRepository: LibraryRepository
     ){}
 
-    async execute({phone, libraryId}: RegisterPhoneLibraryUseCaseRequest ): Promise<RegisterPhoneLibraryUseCaseResponse> {
+    async execute({ddd, phone, libraryId}: RegisterPhoneLibraryUseCaseRequest ): Promise<RegisterPhoneLibraryUseCaseResponse> {
 
         const library = await this.libraryRepository.findById(libraryId)
 
@@ -28,6 +29,7 @@ export class RegisterPhoneLibraryUseCase{
         }
 
         const phoneLibrary = await this.phoneLibraryRepository.creataPhone({
+            ddd,
             phone,
             library:{
                 connect:{id: libraryId}
