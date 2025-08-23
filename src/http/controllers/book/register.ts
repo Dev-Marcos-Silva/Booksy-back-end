@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { makeRegisterBookUseCase } from "../../../use-case/factories/make-register-book-use-case";
 import { LibraryNotFoundError } from "../../../use-case/err/library-not-found-err";
+import { DuplicateBookRecordError } from "../../../use-case/err/duplicate-book-record.err";
 import { deleteImageAfterError } from "../../../utils/delete-image";
 import z from "zod";
 
@@ -63,6 +64,9 @@ export async function register(request: FastifyRequest, reply: FastifyReply){
 
         if(err instanceof LibraryNotFoundError){
             return reply.status(404).send({message: err.message})
+        }
+        else if(err instanceof DuplicateBookRecordError){
+            return reply.status(409).send({message: err.message})   
         }
 
         throw err

@@ -113,7 +113,7 @@ model Book{
   finishing       String
   year_publi      String
   availability    Availability @default(available)
-  isbn            String @unique
+  isbn            String
   dimensions      String
   page            Int
   amount          Int

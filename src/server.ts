@@ -11,7 +11,8 @@ import { routers } from './http/router';
 const app = fastify()
 
 app.register(fastifyCors,{
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173",
+    credentials: true
 })
 
 app.register(fastifyCookie)

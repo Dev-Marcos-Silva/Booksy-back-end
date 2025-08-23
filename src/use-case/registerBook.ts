@@ -2,6 +2,7 @@ import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
 import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
+import { DuplicateBookRecordError } from "./err/duplicate-book-record.err";
 
 interface RegisterBookUseCaseRequest{
     bookId: string
@@ -57,8 +58,15 @@ export class RegisterBookUseCase{
         }
 
         const bookExist = await this.booksRepository.findBookIsbn(isbn)
-        
 
+        if(bookExist){
+            bookExist.map(book => {
+                if(book.library_id === libraryId){
+                    throw new DuplicateBookRecordError()
+                }
+            })
+        }
+        
         const id = bookId
 
         const book = await this.booksRepository.createBook({

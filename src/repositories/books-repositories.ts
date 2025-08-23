@@ -10,7 +10,7 @@ export interface BooksRepository {
 
     searchByCategory(category: string ): Promise<Book[]>
 
-    findBookIsbn(isbn: string): Promise<Book | null>
+    findBookIsbn(isbn: string): Promise<Book[] | null>
 
     getBookTopRated(): Promise<BookWithStar[]>
 

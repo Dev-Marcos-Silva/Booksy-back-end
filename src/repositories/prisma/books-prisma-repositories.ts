@@ -74,7 +74,7 @@ export class PrismaBooksRepository implements BooksRepository {
 
     async findBookIsbn(isbn: string){
 
-        const book = await prisma.book.findUnique({
+        const book = await prisma.book.findMany({
             where:{
                 isbn: isbn
             }
