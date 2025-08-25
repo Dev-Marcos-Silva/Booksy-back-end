@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 import { makeGetAllBooksUseCase } from "../../../use-case/factories/make-get-all-books-use-case";
 
 export async function library(request: FastifyRequest, reply: FastifyReply){

@@ -11,10 +11,15 @@ interface GetProfileLibraryUseCaseRequest{
 } 
 
 interface GetProfileLibraryUseCaseResponse{
-    library: Library
-    account: Account
-    address: AddressLibrary
-    phone: PhoneLibrary
+    name: string
+    image: string | null
+    email: string
+	city: string
+	neighborhood: string
+	street: string
+	number: string
+    ddd: string
+	phone: string
 }
 
 export class GetProfileLibraryUseCase{
@@ -49,10 +54,16 @@ export class GetProfileLibraryUseCase{
         }
 
         return{
-            library,
-            account,
-            address,
-            phone
+            name: library.name,
+            image: library.image,
+            email: account.email,
+            city: address.city,
+            neighborhood: address.neighborhood,
+            street: address.street,
+            number: address.number,
+            ddd: phone.ddd,
+            phone: phone.phone
+
         }
     }
 }

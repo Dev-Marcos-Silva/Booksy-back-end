@@ -10,7 +10,7 @@ export async function assessments(request: FastifyRequest, reply: FastifyReply){
 
         const getBooksAssessmentUseCase = makeGetBooksAssessmentUseCase()
 
-        const {assessments} = await getBooksAssessmentUseCase.execute({bookId})
+        const assessments = await getBooksAssessmentUseCase.execute({bookId})
 
         return reply.status(200).send(assessments)
 

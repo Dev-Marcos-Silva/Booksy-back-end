@@ -11,14 +11,9 @@ export async function profile(request: FastifyRequest, reply: FastifyReply){
 
         const getProfileUserUseCase = makeGetProfileUserUseCase()
 
-        const {user, account, address, phone} = await getProfileUserUseCase.execute({userId})
+        const user = await getProfileUserUseCase.execute({userId})
 
-        return reply.status(200).send({
-            user, 
-            account, 
-            address, 
-            phone
-        })
+        return reply.status(200).send(user)
 
     }catch(err){
 

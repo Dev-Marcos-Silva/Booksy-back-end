@@ -7,7 +7,19 @@ interface GetBooksUseCaseRequest{
 }
 
 interface GetBooksUseCaseResponse{
-    book: Book
+    library_id: string
+    author: string
+    title: string
+    image: string | null
+    description: string
+    dimensions: string
+    availability: string
+    category: string
+    edition: string
+    year_publi: string
+    finishing: string
+    page: number
+    amount: number
 }
 
 export class GetBooksUseCase{
@@ -23,7 +35,19 @@ export class GetBooksUseCase{
         }
 
         return{
-            book
+            library_id: book.library_id,
+            author: book.author,
+            title: book.title,
+            image: book.image,
+            description: book.description,
+            availability: book.availability,
+            category: book.category,
+            edition: book.edition,
+            dimensions: book.dimensions,
+            year_publi: book.year_publi,
+            finishing: book.finishing,
+            amount: book.amount,
+            page: book.page   
         }
     }
 }

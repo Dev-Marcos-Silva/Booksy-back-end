@@ -11,10 +11,15 @@ interface GetProfileUserUseCaseRequest{
 }
 
 interface GetProfileUserUseCaseResponse{
-    user: User
-    account: Account
-    address: AddressUser | null
-    phone: PhoneUser | null
+    name: string
+    image: string | null
+    email: string
+	city: string | undefined
+	neighborhood: string | undefined
+	street: string | undefined
+	number: string | undefined
+    ddd: string | undefined
+	phone: string | undefined
 }
 
 export class GetProfileUserUseCase{
@@ -45,10 +50,15 @@ export class GetProfileUserUseCase{
         const phone = await this.phoneRepository.getPhone(userId)
 
         return{
-            user,
-            account,
-            address,
-            phone
+            name: user.name,
+            image: user.avatar,
+            email: account.email,
+            city: address?.city,
+            neighborhood: address?.neighborhood,
+            street: address?.street,
+            number: address?.number,
+            ddd: phone?.ddd,
+            phone: phone?.phone
         }
     }
 }
