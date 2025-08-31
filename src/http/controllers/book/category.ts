@@ -14,7 +14,7 @@ export async function category(request: FastifyRequest, reply: FastifyReply){
 
         const searchBookCategoryUseCase = makeSearchBookCategoryUseCase()
 
-        const {books} = await searchBookCategoryUseCase.execute({category})
+        const books = await searchBookCategoryUseCase.execute({category})
 
         return reply.status(200).send(books)
 

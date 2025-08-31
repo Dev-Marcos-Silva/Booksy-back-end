@@ -3,6 +3,7 @@ import { BooksRepository } from "../repositories/books-repositories";
 import { LibraryRepository } from "../repositories/libraries-repositories";
 import { LibraryNotFoundError } from "./err/library-not-found-err";
 import { DuplicateBookRecordError } from "./err/duplicate-book-record.err";
+import { RegisterBookError } from "./err/register-book-err";
 
 interface RegisterBookUseCaseRequest{
     bookId: string
@@ -50,6 +51,15 @@ export class RegisterBookUseCase{
         amount,  
         libraryId
     }: RegisterBookUseCaseRequest): Promise<RegisterBookUseCaseResponse> {
+
+        if(
+            category === "default" || 
+            edition === "default" || 
+            finishing === "default" || 
+            year_publi === "default")
+        {
+            throw new RegisterBookError()
+        }
 
         const library_Id = await this.libraryRepository.findById(libraryId) 
 

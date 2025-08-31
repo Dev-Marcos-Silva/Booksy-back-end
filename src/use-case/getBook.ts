@@ -10,6 +10,7 @@ interface GetBooksUseCaseResponse{
     library_id: string
     author: string
     title: string
+    isbn: string
     image: string | null
     description: string
     dimensions: string
@@ -38,6 +39,7 @@ export class GetBooksUseCase{
             library_id: book.library_id,
             author: book.author,
             title: book.title,
+            isbn: book.isbn,
             image: book.image,
             description: book.description,
             availability: book.availability,

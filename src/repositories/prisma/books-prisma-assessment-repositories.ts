@@ -1,4 +1,4 @@
-import { Assessment, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { BookAssessmentRepository } from "../books-assessment-repositories";
 import { prisma } from "../../lib";
 

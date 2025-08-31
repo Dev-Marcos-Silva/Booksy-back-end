@@ -1,11 +1,14 @@
-import { Availability } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
+import { LibraryRepository } from "../repositories/libraries-repositories";
 import { clean } from "../utils/clean-string";
 import { verify } from "../utils/verify-number";
 import { BookNotFoundError } from "./err/book-not-found-err";
+import { DuplicateBookRecordError } from "./err/duplicate-book-record.err";
+import { LibraryNotFoundError } from "./err/library-not-found-err";
 
 interface UpdateRegisterBookUseCaseRequest{
     bookId: string
+    libraryId: string
     title: string
     author: string
     description: string
@@ -24,10 +27,12 @@ export class UpdateRegisterBookUseCase{
 
     constructor(
         private booksRepository: BooksRepository,
+        private libraryRepository: LibraryRepository,
     ){}
 
     async execute({ 
         bookId,
+        libraryId,
         title, 
         author, 
         description, 
@@ -45,6 +50,22 @@ export class UpdateRegisterBookUseCase{
 
         if(!book){
             throw new BookNotFoundError()
+        }
+
+        const library_Id = await this.libraryRepository.findById(libraryId) 
+        
+        if(!library_Id){
+            throw new LibraryNotFoundError()
+        }
+        
+        const bookExist = await this.booksRepository.findBookIsbn(isbn)
+        
+        if(bookExist){
+            bookExist.map(bookExist => {
+                if(bookExist.library_id === libraryId && bookExist.id !== book.id ){
+                    throw new DuplicateBookRecordError()
+                }
+            })
         }
 
         const date = new Date()

@@ -33,7 +33,7 @@ export function routersBooks(app: FastifyInstance){
 
     app.patch('/update/book/:id',{onRequest: [jwtVerify, verifyAccountRole]}, update)
 
-    app.patch('/imagen/book/:id',{onRequest: [jwtVerify, verifyAccountRole], preValidation: updateImage('book')}, image)
+    app.patch('/image/book/:id',{onRequest: [jwtVerify, verifyAccountRole], preValidation: updateImage('book')}, image)
 
     app.delete('/delete/book/:id',{onRequest:[jwtVerify, verifyAccountRole], preValidation: deleteImage('book')}, deleteBook)
 
