@@ -13,6 +13,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply){
     const schemaRequest = z.object({
         name: z.string(),
         email: z.string(),
+        cep: z.string(),
         newPassword: z.string(),
         oldPassword: z.string(),
         city: z.string(),
@@ -22,17 +23,19 @@ export async function update(request: FastifyRequest, reply: FastifyReply){
         phone: z.string(),
     })
 
-    const {name, email, newPassword, oldPassword, city, neighborhood, number, street, phone} = schemaRequest.parse(request.body)
+    const {name, email, cep, newPassword, oldPassword, city, neighborhood, number, street, phone} = schemaRequest.parse(request.body)
 
     try{
 
         const updateProfileUserUseCase = makeUpdateProfileUserUseCase()
 
-        await updateProfileUserUseCase.execute({userId, name, email, newPassword, oldPassword, city, neighborhood, number, street, phone})
+        await updateProfileUserUseCase.execute({userId, name, email, cep, newPassword, oldPassword, city, neighborhood, number, street, phone})
 
         return reply.status(201).send()
 
     }catch(err){
+
+        console.log(err)
 
         if(err instanceof UserNotFoundError || err instanceof AccountNotFoundError){
             return reply.status(404).send({message: err.message})

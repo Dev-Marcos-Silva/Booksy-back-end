@@ -14,6 +14,7 @@ interface GetProfileUserUseCaseResponse{
     name: string
     image: string | null
     email: string
+    cep: string | undefined
 	city: string | undefined
 	neighborhood: string | undefined
 	street: string | undefined
@@ -53,6 +54,7 @@ export class GetProfileUserUseCase{
             name: user.name,
             image: user.avatar,
             email: account.email,
+            cep: address?.cep,
             city: address?.city,
             neighborhood: address?.neighborhood,
             street: address?.street,

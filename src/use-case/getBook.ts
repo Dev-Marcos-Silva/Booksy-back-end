@@ -1,6 +1,7 @@
 import { Book } from "@prisma/client";
 import { BooksRepository } from "../repositories/books-repositories";
 import { BookNotFoundError } from "./err/book-not-found-err";
+import { BookAssessmentRepository } from "../repositories/books-assessment-repositories";
 
 interface GetBooksUseCaseRequest{
     bookId: string
@@ -10,6 +11,13 @@ interface GetBooksUseCaseResponse{
     library_id: string
     author: string
     title: string
+    stars: {
+        id: number;
+        created_at: Date;
+        star: number;
+        book_id: string;
+        user_id: string;
+    }[]
     isbn: string
     image: string | null
     description: string
@@ -25,7 +33,10 @@ interface GetBooksUseCaseResponse{
 
 export class GetBooksUseCase{
 
-    constructor(private booksRepository: BooksRepository){}
+    constructor(
+        private booksRepository: BooksRepository,
+        private bookAssessmentRepository: BookAssessmentRepository
+    ){}
 
     async execute({ bookId }: GetBooksUseCaseRequest ): Promise<GetBooksUseCaseResponse> {
 
@@ -35,10 +46,13 @@ export class GetBooksUseCase{
             throw new BookNotFoundError()
         }
 
+        const stars = await this.bookAssessmentRepository.getAssessment(bookId)
+
         return{
             library_id: book.library_id,
             author: book.author,
             title: book.title,
+            stars,
             isbn: book.isbn,
             image: book.image,
             description: book.description,

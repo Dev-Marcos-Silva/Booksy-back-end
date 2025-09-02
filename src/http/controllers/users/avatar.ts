@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { makeUpdateAvatarUserUseCase } from "../../../use-case/factories/make-update-avatar-user-use-case";
 import { UserNotFoundError } from "../../../use-case/err/user-not-found-err";
-import { deleteImage } from "../../../config/delete-image";
 import { deleteImageAfterError } from "../../../utils/delete-image";
 
 export async function avatar(request: FastifyRequest, reply: FastifyReply){

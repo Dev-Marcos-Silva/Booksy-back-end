@@ -14,6 +14,7 @@ interface UpdateProfileUserUseCaseRequest{
     userId: string
     name: string | undefined 
     email: string | undefined
+    cep: string | undefined
     newPassword: string | undefined
     oldPassword: string 
     city: string | undefined
@@ -37,7 +38,7 @@ export class UpdateProfileUserUseCase{
         private phoneUserRepository: PhoneUserRepository,
     ){}
 
-    async execute({userId, name, email, newPassword, oldPassword, city, neighborhood, number, street, phone}: UpdateProfileUserUseCaseRequest ): Promise<UpdateProfileUserUseCaseResponse> {
+    async execute({userId, name, email, cep, newPassword, oldPassword, city, neighborhood, number, street, phone}: UpdateProfileUserUseCaseRequest ): Promise<UpdateProfileUserUseCaseResponse> {
 
         const user = await this.userRepository.findById(userId)
 
@@ -105,6 +106,7 @@ export class UpdateProfileUserUseCase{
         const newAddress = {
             id: user.id,
             city: clean(city) ?? address.city,
+            cep: clean(cep) ?? address.cep,
             neighborhood: clean(neighborhood) ?? address.neighborhood,
             street: clean(street) ?? address.street,
             number: clean(number) ?? address.number
