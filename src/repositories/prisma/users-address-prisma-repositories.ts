@@ -25,13 +25,14 @@ export class PrismaUsersAddressRepository implements AddressUserRepository {
 
     async updateAddress(newAddress: Address){
 
-        const {id, city, neighborhood, number, street} = newAddress
+        const {id, city, cep, neighborhood, number, street} = newAddress
 
         await prisma.addressUser.update({
             where: {
                 user_id: id
             },data:{
                 city,
+                cep,
                 neighborhood,
                 number,
                 street

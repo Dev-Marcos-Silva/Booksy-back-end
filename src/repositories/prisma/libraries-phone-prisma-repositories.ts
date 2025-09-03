@@ -25,12 +25,13 @@ export class PrismaLibrariesPhoneRepository implements PhoneLibraryRepository {
 
     async updatePhone(newPhone: Phone) {
     
-        const {id, phone} = newPhone
+        const {id, ddd, phone} = newPhone
     
         await prisma.phoneLibrary.update({
             where: {
                 library_id: id
             },data:{
+                ddd,
                 phone
             }
         })

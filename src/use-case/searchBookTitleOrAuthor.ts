@@ -32,7 +32,7 @@ export class SearchBookTitleOrAuthorUseCase{
 
         const books = await this.bookRepository.searchByTitleOrAuthor(query)
 
-       const bookWithStar = await Promise.all(books.map(async book => {
+        const bookWithStar = await Promise.all(books.map(async book => {
             const star = await this.bookAssessmentRepository.getAssessment(book.id)
 
             return{

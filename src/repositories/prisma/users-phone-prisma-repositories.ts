@@ -25,12 +25,13 @@ export class PrismaUsersPhoneRepository implements PhoneUserRepository {
 
     async updatePhone(newPhone: Phone) {
 
-        const {id, phone} = newPhone
+        const {id, ddd, phone} = newPhone
 
         await prisma.phoneUser.update({
             where: {
                 user_id: id
             },data:{
+                ddd,
                 phone
             }
         })

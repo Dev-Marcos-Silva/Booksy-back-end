@@ -14,12 +14,14 @@ interface UpdateProfileLibraryUseCaseRequest{
     libraryId: string
     name: string | undefined 
     email: string | undefined
+    cep: string | undefined
     newPassword: string | undefined
     oldPassword: string 
     city: string | undefined
     neighborhood: string | undefined
     number: string | undefined
     street: string | undefined
+    ddd: string | undefined
     phone: string | undefined
 }
 
@@ -37,7 +39,7 @@ export class UpdateProfileLibraryUseCase{
         private phoneLibraryRepository: PhoneLibraryRepository,
     ){}
 
-    async execute({libraryId, name, email, newPassword, oldPassword, city, neighborhood, number, street, phone}: UpdateProfileLibraryUseCaseRequest ): Promise<UpdateProfileLibraryUseCaseResponse> {
+    async execute({libraryId, name, email, cep, newPassword, oldPassword, city, neighborhood, number, street,ddd, phone}: UpdateProfileLibraryUseCaseRequest ): Promise<UpdateProfileLibraryUseCaseResponse> {
 
         const library = await this.libraryRepository.findById(libraryId)
 
@@ -105,6 +107,7 @@ export class UpdateProfileLibraryUseCase{
         const newAddress = {
             id: library.id,
             city: clean(city) ?? address.city,
+            cep: clean(cep) ?? address.cep,
             neighborhood: clean(neighborhood) ?? address.neighborhood,
             street: clean(street) ?? address.street,
             number: clean(number) ?? address.number
@@ -114,6 +117,7 @@ export class UpdateProfileLibraryUseCase{
 
          const newPhone = {
             id: library.id,
+            ddd: clean(ddd) ?? libraryPhone.ddd,
             phone: validationPhone(phone) ?? libraryPhone.phone
         }
 

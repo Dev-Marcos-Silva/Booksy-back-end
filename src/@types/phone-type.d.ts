@@ -1,4 +1,5 @@
 export type Phone = {
-    id: string,
+    id: string
+    ddd: string
     phone: string
 }
