@@ -28,6 +28,11 @@ interface FetchRendBookLibraryUseCaseResponse{
         author: string | undefined
         edition: string | undefined
         category: string | undefined
+        isAccept: string | undefined
+        isComplete: string | undefined
+        deliveryDate: Date | null
+        returnDate: Date | null
+        endDate: Date | null
         date: Date | undefined
     }[]
 }
@@ -81,6 +86,11 @@ export class FetchRendBookLibraryUseCase{
                 author: rendBook?.author,
                 edition: rendBook?.edition,
                 category: rendBook?.category,
+                isAccept: book.is_accepted,
+                isComplete: book.is_complete,
+                deliveryDate: book.delivery_date,
+                returnDate: book.return_date,
+                endDate: book.end_date,
                 date: rendBook?.created_at
             }
         }))

@@ -151,9 +151,10 @@ enum Accept{
 model RentBook{
   id              Int @id @default(autoincrement())
   days            Int
-  order_data      DateTime @default(now()) 
-  delivery_data   DateTime?
-  return_data     DateTime?
+  order_date      DateTime @default(now()) 
+  delivery_date   DateTime?
+  return_date     DateTime?
+  end_date        DateTime?
   book_id         String 
   library_id      String 
   user_id         String 

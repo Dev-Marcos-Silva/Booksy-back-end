@@ -7,13 +7,13 @@ export async function deliver(request: FastifyRequest, reply: FastifyReply){
 
     const rentBookId = Number(id)
 
-    const dataDeliver = new Date()
+    const deliverDate = new Date()
 
     try{
 
         const updateDeliverRendBookUseCase = makeUpdateDeliverRendBookUseCase()
 
-        await updateDeliverRendBookUseCase.execute({rentBookId, dataDeliver})
+        await updateDeliverRendBookUseCase.execute({rentBookId, deliverDate})
 
         return reply.status(200).send()
 

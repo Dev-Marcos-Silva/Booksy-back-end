@@ -14,11 +14,13 @@ export async function complete(request: FastifyRequest, reply: FastifyReply){
 
     const {isComplete} = schemaRequest.parse(request.body)
 
+    const endDate = new Date()
+
     try{
 
         const updateCompleteRendBookUseCase = makeUpdateCompleteRendBookUseCase()
 
-        await updateCompleteRendBookUseCase.execute({rentBookId, isComplete})
+        await updateCompleteRendBookUseCase.execute({rentBookId, isComplete, endDate})
 
         return reply.status(200).send()
 

@@ -4,7 +4,7 @@ import { BookNotFoundError } from "./err/book-not-found-err"
 
 interface UpdateDeliverRendBookUseCaseRequest{
     rentBookId: number
-    dataDeliver: Date
+    deliverDate: Date
 }
 
 interface UpdateDeliverRendBookUseCaseResponse{
@@ -15,7 +15,7 @@ export class UpdateDeliverRendBookUseCase{
 
     constructor(private rendBookRepository: RentedBookRepository){}
 
-    async execute({ rentBookId, dataDeliver }: UpdateDeliverRendBookUseCaseRequest): Promise<UpdateDeliverRendBookUseCaseResponse> {
+    async execute({ rentBookId, deliverDate }: UpdateDeliverRendBookUseCaseRequest): Promise<UpdateDeliverRendBookUseCaseResponse> {
         
         const rendBook = await this.rendBookRepository.findRendBookId(rentBookId)
 
@@ -25,13 +25,13 @@ export class UpdateDeliverRendBookUseCase{
 
         const { days } = rendBook
 
-        const returnData =  new Date(dataDeliver)
-        returnData.setDate(returnData.getDate() + days)
+        const returnDate =  new Date(deliverDate)
+        returnDate.setDate(returnDate.getDate() + days)
 
         const book = await this.rendBookRepository.updateOrderDeliver(
             rentBookId,
-            dataDeliver,
-            returnData
+            deliverDate,
+            returnDate
         )
 
         return{
