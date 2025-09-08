@@ -42,11 +42,14 @@ export class PrismaBooksFavoriteRepository implements FavoriteBookRepository {
         return favoriteBooks
     }
 
-    async getFavoriteBook(favoriteBookId: number){
+    async getFavoriteBook(userId: string, bookId: string){
 
-        const favorite = await prisma.favoriteBook.findUnique({
+        const favorite = await prisma.favoriteBook.findFirst({
             where:{
-                id: favoriteBookId
+                user_id: userId,
+                AND:{
+                    book_id: bookId
+                }
             }
         })
 

@@ -18,7 +18,7 @@ export function routersRentedBook(app: FastifyInstance){
 
     app.get('/user/history/:id',{onRequest: [jwtVerify]}, history)
 
-    app.delete('/user/delete/:id',{onRequest: [jwtVerify]}, deleteHistory)
+    app.patch('/user/delete/:id',{onRequest: [jwtVerify]}, deleteHistory)
 
     app.get('/library/rented/book/:id',{onRequest: [jwtVerify, verifyAccountRole]}, library)
 

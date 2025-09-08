@@ -4,7 +4,7 @@ import { FavoriteBookNotFound } from "./err/favorite-book-not-found-err"
 
 interface DeleteFavoriteBookUseCaseRequest{
     userId: string
-    favoriteBookId: number
+    bookId: string
 }
 
 interface DeleteFavoriteBookUseCaseResponse{
@@ -15,15 +15,15 @@ export class DeleteFavoriteBookUseCase{
     
     constructor(private favoriteBookRepository: FavoriteBookRepository){}
 
-    async execute({userId, favoriteBookId}: DeleteFavoriteBookUseCaseRequest ): Promise<DeleteFavoriteBookUseCaseResponse> {
+    async execute({userId, bookId}: DeleteFavoriteBookUseCaseRequest ): Promise<DeleteFavoriteBookUseCaseResponse> {
 
-        const favoriteBook = await this.favoriteBookRepository.getFavoriteBook(favoriteBookId)
+        const favoriteBook = await this.favoriteBookRepository.getFavoriteBook(userId, bookId)
 
         if(!favoriteBook){
             throw new FavoriteBookNotFound()
         }
 
-        await this.favoriteBookRepository.deleteFavoriteBook(userId, favoriteBookId)
+        await this.favoriteBookRepository.deleteFavoriteBook(userId, favoriteBook.id)
         
         return{
             favoriteBook

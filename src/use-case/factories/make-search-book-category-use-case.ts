@@ -1,4 +1,5 @@
 import { PrismaBooksAssessmentRepository } from "../../repositories/prisma/books-prisma-assessment-repositories";
+import { PrismaBooksFavoriteRepository } from "../../repositories/prisma/books-prisma-favorite-repositories";
 import { PrismaBooksRepository } from "../../repositories/prisma/books-prisma-repositories";
 import { SearchBookCategoryUseCase } from "../searchBookCategory";
 
@@ -8,7 +9,9 @@ export function makeSearchBookCategoryUseCase(){
 
     const bookAssessmentRepository = new PrismaBooksAssessmentRepository()
 
-    const searchBookCategoryUseCase = new SearchBookCategoryUseCase(booksRepository, bookAssessmentRepository)
+    const favoriteBookRepository = new PrismaBooksFavoriteRepository()
+
+    const searchBookCategoryUseCase = new SearchBookCategoryUseCase(booksRepository, bookAssessmentRepository, favoriteBookRepository)
 
     return searchBookCategoryUseCase
 }

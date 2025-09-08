@@ -5,21 +5,18 @@ import { FavoriteBookNotFound } from "../../../use-case/err/favorite-book-not-fo
 
 export async function deleteFavorite(request: FastifyRequest, reply: FastifyReply){
 
-    const { id } = request.params as { id: number}
-
-    const favoriteBookId = Number(id)
-
     const schemaRequest = z.object({
         userId: z.string().uuid(),
+        bookId: z.string().uuid()
     })
 
-    const {userId} = schemaRequest.parse(request.body)
+    const {userId, bookId} = schemaRequest.parse(request.body)
 
     try{
 
         const deleteFavoriteBookUseCase = makeDeleteFavoriteBookUseCase()
 
-        await deleteFavoriteBookUseCase.execute({userId, favoriteBookId})
+        await deleteFavoriteBookUseCase.execute({userId, bookId})
 
         return reply.status(200).send()
 

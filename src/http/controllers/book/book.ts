@@ -7,11 +7,17 @@ export async function book(request: FastifyRequest, reply: FastifyReply){
 
     const { id: bookId } = request.params as { id: string }
 
+    const schemaRequest = z.object({
+            accountId: z.string()
+    })
+
+    const { accountId } = schemaRequest.parse(request.query)
+
     try{
 
         const getBooksUseCase = makeGetBooksUseCase()
 
-        const book = await getBooksUseCase.execute({bookId})
+        const book = await getBooksUseCase.execute({bookId, accountId})
 
         return reply.status(200).send(book)
 
