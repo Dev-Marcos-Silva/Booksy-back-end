@@ -34,7 +34,7 @@ export async function session(request: FastifyRequest, reply: FastifyReply){
             {
                 sign:{
                     sub: id,
-                    expiresIn: '1d'
+                    expiresIn: '20sec'
                 }
             }
         )

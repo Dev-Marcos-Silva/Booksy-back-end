@@ -25,9 +25,9 @@ export function routersBooks(app: FastifyInstance){
 
     app.get('/category/book',{onRequest: [jwtVerify]}, category)
 
-    app.get('/rateds/book',{onRequest: [jwtVerify]}, rateds)
+    app.get('/rateds/book/:id',{onRequest: [jwtVerify]}, rateds)
 
-    app.get('/recents/book',{onRequest: [jwtVerify]}, recent)
+    app.get('/recents/book/:id',{onRequest: [jwtVerify]}, recent)
 
     app.get('/library/book/:id',{onRequest: [jwtVerify, verifyAccountRole]}, library)
 

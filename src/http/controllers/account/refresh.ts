@@ -13,7 +13,7 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
         {
             sign:{
                 sub: request.user.sub,
-                expiresIn: '1d'
+                expiresIn: '20sec'
             }
         }
     )
@@ -38,5 +38,5 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply){
             httpOnly: true
         })
         .status(200)
-        .send({type: role, token})
+        .send({token})
 }

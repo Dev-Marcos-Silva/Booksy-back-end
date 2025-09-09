@@ -6,6 +6,6 @@ export function routerSession(app: FastifyInstance){
 
     app.post('/session', session)
 
-    app.patch('/refresh/token', refresh)
+    app.post('/refresh/token', refresh)
 
 }
