@@ -33,6 +33,7 @@ interface GetBooksUseCaseResponse{
     page: number
     amount: number
     bookFavorite: boolean
+    updateAt: Date
 }
 
 export class GetBooksUseCase{
@@ -74,7 +75,8 @@ export class GetBooksUseCase{
             finishing: book.finishing,
             amount: book.amount,
             page: book.page,
-            bookFavorite: bookFavorite   
+            bookFavorite: bookFavorite,
+            updateAt: book.updated_at   
         }
     }
 }

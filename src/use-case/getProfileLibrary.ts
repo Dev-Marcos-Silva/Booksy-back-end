@@ -22,6 +22,7 @@ interface GetProfileLibraryUseCaseResponse{
 	number: string
     ddd: string
 	phone: string
+    updateAt: Date
 }
 
 export class GetProfileLibraryUseCase{
@@ -66,8 +67,8 @@ export class GetProfileLibraryUseCase{
             street: address.street,
             number: address.number,
             ddd: phone.ddd,
-            phone: phone.phone
-
+            phone: phone.phone,
+            updateAt: library.updated_at
         }
     }
 }
