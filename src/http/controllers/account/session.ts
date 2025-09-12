@@ -21,11 +21,11 @@ export async function session(request: FastifyRequest, reply: FastifyReply){
 
         const data = await getIdAccount(user, library)
 
-        if(!data?.id || !data?.name){
+        if(!data?.id){
             throw new InvalidCredentialsError()
         }
 
-        const {id, name, image} = data
+        const {id} = data
 
         const token = await reply.jwtSign(
             {
@@ -59,7 +59,7 @@ export async function session(request: FastifyRequest, reply: FastifyReply){
                 httpOnly: true
             })
             .status(200)
-            .send({type: account.type, id: id, name: name, image: image, token})
+            .send({type: account.type, id: id, token})
 
     }catch(err){
 

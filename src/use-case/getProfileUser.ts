@@ -21,6 +21,7 @@ interface GetProfileUserUseCaseResponse{
 	number: string | undefined
     ddd: string | undefined
 	phone: string | undefined
+    updateAt: Date
 }
 
 export class GetProfileUserUseCase{
@@ -60,7 +61,8 @@ export class GetProfileUserUseCase{
             street: address?.street,
             number: address?.number,
             ddd: phone?.ddd,
-            phone: phone?.phone
+            phone: phone?.phone,
+            updateAt: user.updated_at
         }
     }
 }

@@ -42,7 +42,6 @@ export class AuthenticaionUseCase{
 
         const library = await this.libraryRepository.findByAccouny(account.id)
 
-
         return{
             account,
             user,

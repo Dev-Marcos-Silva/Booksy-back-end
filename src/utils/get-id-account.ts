@@ -2,11 +2,9 @@ import { Library, User } from "@prisma/client";
 
 export async function getIdAccount(user: User | null , library: Library | null) {
 
-   if(user || library){
-    return{
-        id: user?.id ?? library?.id,
-        name: user?.name ?? library?.name,
-        image: user?.avatar ?? library?.image
+    if(user || library){
+        return{
+            id: user?.id ?? library?.id,
+        }
     }
-   }
 }
