@@ -1,73 +1,146 @@
-# Booksy 
+# 📗 Booksy - Backend
 
-Sistema de Gerenciamento de Biblioteca
+API do sistema **Booksy**, responsável pelo gerenciamento de **usuários, bibliotecas, livros, pedidos e interações**.  
+Construída com **Node.js + Fastify + TypeScript**, com autenticação JWT e persistência em PostgreSQL via Prisma ORM.
 
-## RFs ( Requisitos funcionais )
+---
 
-- [x] Deve ser possível se cadastrar
-- [x] Deve ser possível se autenticar
-- [x] Deve ser possível pesquisa por um livro(titulo ou autor)
-- [x] Deve ser possível obter as informações do livro
-- [x] Deve ser possível obter as informações da biblioteca
-- [x] Deve ser possível definir os dias para entregar o livro
-- [x] Deve ser possível fazer um pedido do livro
-- [x] Deve ser possível favoritar um livro
-- [x] Deve ser possível desfavoritar um livro
-- [x] Deve ser possível visualizar livros favoritados
-- [x] Deve ser possível avaliar o livro
-- [x] Deve ser possível obter as avaliações do livro 
-- [x] Deve ser possível comentar em um livro
-- [x] Deve ser possível obter os comentarios no livro 
-- [x] Deve ser possível obter as informações do livro alugado
-- [x] Deve ser possível obter o histórico dos livros concluídos
-- [x] Deve ser possível obter a quantidade de livros concluídos
-- [x] Deve ser possível excluir o histórico de livros
-- [x] Deve ser possível visualizar sugestões de livros mais avaliados
-- [x] Deve ser possível visualizar sugestões de livros recém adicionados
-- [x] Deve ser possível atualizar as informações de um perfil de usuário
-- [x] Deve ser possível atualizar a foto de perfil do usuário
-- [x] Deve ser possível deletar um usuário  
-- [x] Deve ser possível cadastrar uma biblioteca
-- [x] Deve ser possível se autenticar pelo email de cadastro da biblioteca
-- [x] Deve ser possível cadastrar um livro
-- [x] Deve ser possível visualizar livros cadastrados
-- [x] Deve ser possível editar um livro cadastrado
-- [x] Deve ser possível excluir um livro cadastrado 
-- [x] Deve ser possível obter as informações do livro cadastrado
-- [x] Deve ser possível responde os comentarios do livro
-- [x] Deve ser possível visualizar as respostas da biblioteca
-- [x] Deve ser possível visualizar os pedidos de livros
-- [x] Deve ser possivel visualizar o perfil do usuário
-- [x] Deve ser possivel negar o pedido de livro 
-- [x] Deve ser possivel aceitar o pedido de livro 
-- [x] Deve ser possível confirmar a entregar do livro ao usuário
-- [x] Deve ser possível confirmar a devolução do livro a biblioteca
-- [x] Deve ser possível visualizar os livros entregues
-- [x] Deve ser possível visualizar a quantidade de livros entregues
-- [x] Deve ser possível visualizar os livros não entregues
-- [x] Deve ser possível visualizar a quantidade de livros não entregues
-- [x] Deve ser possível confirmar a conclusão de um livro não entregue
-- [x] Deve ser possível atualizar as informações de um perfil da biblioteca
-- [x] Deve ser possível atualizar a foto de perfil da biblioteca
-- [x] Deve ser possível deletar uma biblioteca
+## 🚀 Tecnologias Utilizadas
 
+- **Fastify** → framework web rápido e minimalista  
+- **TypeScript** → tipagem estática  
+- **Prisma ORM** → ORM para PostgreSQL  
+- **PostgreSQL** (via Docker + Bitnami)  
+- **JWT** com `@fastify/jwt` → autenticação  
+- **BcryptJS** → hash de senha  
+- **Zod** → validação e tipagem de dados  
+- **Dotenv** → variáveis de ambiente  
+- **@fastify/cors** → CORS  
+- **@fastify/cookie** → cookies (refresh token)  
+- **@fastify/multipart** → upload (fotos de perfil/avatares)  
+- **@fastify/static** → servir arquivos estáticos  
 
-## RNs ( Regras de negócio )
+---
 
-- [ ] O usuário só pode definir no máximo 60 dias para entregar o livro
-- [x] O usuário não pode se cadastrar com o email duplicado
-- [x] Os 60 dias para entragar o livro só vão contar a partir da entregar do livro ao usuário
-- [ ] Os pedidos enviados para a biblioteca vão sumir se não respondido em 24horas
-- [x] Apenas a biblioteca pode interagir com os pedidos
+## 🔑 Autenticação & Roles
 
-## RNFs ( Requisitos não-funcionais )
+- Autenticação com **JWT (access + refresh token)**  
+- Refresh token armazenado em **cookies HTTPOnly + Secure**  
+- **Roles (RBAC):**
+  - `user` → usuários da plataforma  
+  - `library` → bibliotecas que cadastram livros e gerenciam pedidos  
 
-- [ ] Utilizar React + Tailwind no Front-end
-- [x] Utilizar Node + TypeScript + Fastify no Back-end
-- [x] Utilizar Bcrypt para hash de senha dos usuários
-- [x] Utilizar o Zod para tipagem de dados
-- [x] Utilizar Docker + PostgreSQL como Banco de dados
-- [x] Utilizar PrismaORM para manipular o Banco de dados
-- [x] Utilizar autenticação JWT(JSON WEB TOKEN)
-- [x] Utilizar sistema de roles RBAC
+---
+
+## 🔐 Autenticação
+
+| Método | Rota             | Descrição                                      |
+|--------|-----------------|-----------------------------------------------|
+| POST   | `/session`       | Autentica usuário ou biblioteca e retorna tokens (access + refresh) |
+| POST   | `/refresh/token` | Renova o **access token** usando o refresh token |
+
+---
+
+## 👤 Usuários
+
+| Método | Rota                     | Autenticação | Descrição |
+|--------|--------------------------|-------------|-----------|
+| POST   | `/user`                  | ❌           | Cadastra um novo usuário |
+| GET    | `/user/profile/:id`      | ✅ JWT      | Obtém informações do perfil de um usuário específico |
+| PATCH  | `/user/update/:id`       | ✅ JWT      | Atualiza informações do usuário |
+| POST   | `/user/address/:id`      | ✅ JWT      | Adiciona ou atualiza endereço do usuário |
+| PATCH  | `/user/avatar/:id`       | ✅ JWT      | Atualiza foto de perfil do usuário  |
+
+---
+
+## 🏛 Bibliotecas
+
+| Método | Rota                           | Autenticação | Descrição |
+|--------|--------------------------------|-------------|-----------|
+| POST   | `/library/:id`                 | ✅ JWT      | Cadastra uma biblioteca  |
+| GET    | `/library/profile/:id`         | ✅ JWT      | Obtém informações do perfil de uma biblioteca |
+| PATCH  | `/library/avatar/:id`          | ✅ JWT + Role `library` | Atualiza foto de perfil da biblioteca  |
+| PATCH  | `/library/update/:id`          | ✅ JWT + Role `library` | Atualiza informações do perfil da biblioteca |
+
+---
+
+## 📖 Livros
+
+| Método | Rota                          | Autenticação | Descrição |
+|--------|-------------------------------|-------------|-----------|
+| POST   | `/register/book/:id`           | ✅ JWT + Role `library` | Cadastra um livro |
+| GET    | `/book/:id`                    | ✅ JWT      | Obtém informações de um livro específico |
+| GET    | `/search/book`                 | ✅ JWT      | Pesquisa livros por título ou autor |
+| GET    | `/category/book`               | ✅ JWT      | Filtra livros por categoria |
+| GET    | `/rateds/book/:id`             | ✅ JWT      | Lista livros mais avaliados de um usuário/biblioteca |
+| GET    | `/recents/book/:id`            | ✅ JWT      | Lista livros recém adicionados |
+| GET    | `/library/book/:id`            | ✅ JWT + Role `library` | Lista livros cadastrados pela biblioteca |
+| PATCH  | `/update/book/:id`             | ✅ JWT + Role `library` | Atualiza informações do livro |
+| PATCH  | `/image/book/:id`              | ✅ JWT + Role `library` | Atualiza imagem do livro |
+| DELETE | `/delete/book/:id`             | ✅ JWT + Role `library` | Exclui livro e remove imagem associada |
+
+---
+
+## 📦 Pedidos / Aluguel de Livros
+
+| Método | Rota                         | Autenticação | Descrição |
+|--------|------------------------------|-------------|-----------|
+| POST   | `/rented/book`               | ✅ JWT      | Cria um novo pedido de aluguel de livro |
+| GET    | `/user/rented/book/:id`      | ✅ JWT      | Lista livros alugados pelo usuário |
+| GET    | `/user/history/:id`          | ✅ JWT      | Lista histórico de livros concluídos do usuário |
+| PATCH  | `/user/delete/:id`           | ✅ JWT      | Exclui histórico de livros do usuário |
+| GET    | `/library/rented/book/:id`  | ✅ JWT + Role `library` | Lista pedidos de livros da biblioteca |
+| PUT    | `/library/accept/:id`       | ✅ JWT + Role `library` | Aceita um pedido de livro |
+| PUT    | `/library/deliver/:id`      | ✅ JWT + Role `library` | Confirma a entrega do livro ao usuário |
+| PUT    | `/library/complete/:id`     | ✅ JWT + Role `library` | Confirma a devolução/conclusão do livro |
+
+---
+
+## 📝 Comentários
+
+| Método | Rota                        | Autenticação | Descrição |
+|--------|-----------------------------|-------------|-----------|
+| POST   | `/comment/register`         | ✅ JWT      | Adiciona um comentário em um livro |
+| GET    | `/comment/get/:id`          | ✅ JWT      | Lista os comentários de um livro específico |
+
+---
+
+## 💬 Resposta da Biblioteca
+
+| Método | Rota                          | Autenticação | Descrição |
+|--------|-------------------------------|-------------|-----------|
+| POST   | `/library/response`           | ✅ JWT + Role `library` | Biblioteca responde a um comentário de um livro |
+| GET    | `/library/response/:id`       | ✅ JWT      | Lista respostas da biblioteca para os comentários de um livro |
+
+---
+
+## ⭐ Avaliações
+
+| Método | Rota                         | Autenticação | Descrição |
+|--------|------------------------------|-------------|-----------|
+| POST   | `/assessment/register`       | ✅ JWT      | Adiciona uma avaliação (nota) a um livro |
+| GET    | `/assessment/get/:id`        | ✅ JWT      | Lista as avaliações de um livro específico |
+
+---
+
+## ⭐ Favoritos
+
+| Método | Rota                        | Autenticação | Descrição |
+|--------|-----------------------------|-------------|-----------|
+| POST   | `/favorite/register`        | ✅ JWT      | Adiciona um livro aos favoritos |
+| GET    | `/favorite/get/:id`         | ✅ JWT      | Lista livros favoritados de um usuário |
+| DELETE | `/favorite/delete`          | ✅ JWT      | Remove um livro dos favoritos |
+
+---
+
+## 📜 Regras de Negócio
+
+- Usuário só pode definir **máx. 60 dias** para entrega  
+- O prazo começa **apenas após a entrega**  
+- Pedidos expiram em **48h** se não respondidos  
+- Somente a **biblioteca** pode interagir com pedidos  
+
+---
+
+## 🐳 Docker & Banco de Dados
 

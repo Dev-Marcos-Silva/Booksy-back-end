@@ -12,6 +12,7 @@ interface GetBookAssessmentUseCaseResponse{
         star: number
         book_id: string
         user: {
+            id: string | undefined
             name: string | undefined
             avatar: string | null | undefined
         }
@@ -38,6 +39,7 @@ export class GetBookAssessmentUseCase{
                 star: assessment.star,
                 book_id: assessment.book_id,
                 user: {
+                    id: user?.id,
                     name: user?.name,
                     avatar: user?.avatar
                 }
