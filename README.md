@@ -81,7 +81,7 @@ Construída com **Node.js + Fastify + TypeScript**, com autenticação JWT e per
 
 ---
 
-## 📦 Pedidos / Aluguel de Livros
+## 📦 Pedidos
 
 | Método | Rota                         | Autenticação | Descrição |
 |--------|------------------------------|-------------|-----------|
@@ -105,7 +105,7 @@ Construída com **Node.js + Fastify + TypeScript**, com autenticação JWT e per
 
 ---
 
-## 💬 Resposta da Biblioteca
+## 💬 Respostas
 
 | Método | Rota                          | Autenticação | Descrição |
 |--------|-------------------------------|-------------|-----------|
@@ -142,5 +142,12 @@ Construída com **Node.js + Fastify + TypeScript**, com autenticação JWT e per
 
 ---
 
-## 🐳 Docker & Banco de Dados
+## 📐 Modelagem do Banco de Dados
+
+Abaixo ficará o diagrama do banco de dados para referência das entidades e relacionamentos:
+
+![Database Diagram](./docs//banco%20de%20dados.png)
+
+.
+
 
