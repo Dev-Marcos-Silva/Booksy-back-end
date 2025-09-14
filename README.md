@@ -148,6 +148,73 @@ Abaixo ficará o diagrama do banco de dados para referência das entidades e rel
 
 ![Database Diagram](/docs/database.webp)
 
-.
+## ▶️ Como Executar o Projeto
+
+### 1️⃣ Pré-requisitos
+
+Antes de iniciar, certifique-se de ter instalado em sua máquina:
+
+- Node.js
+ (>= 20.x)
+
+- npm
+ ou yarn
+
+- Docker
+ (para subir o banco de dados PostgreSQL)
 
 
+### 2️⃣ Clonar o repositório
+
+```bash
+# Clonar o repositório.
+git clone https://github.com/Dev-Marcos-Silva/Booksy-back-end.git
+
+# Entrar no projeto.
+cd backend
+```
+
+### 3️⃣ Instalar dependências
+
+```bash
+# Instalar dependências.
+npm install
+```
+
+### 4️⃣ Configurar variáveis de ambiente
+
+Crie um arquivo .env na raiz do backend com as seguintes variáveis (exemplo):
+
+```env
+NODE_ENV="dev"
+
+JWT_SECRET="apilibrary"
+
+PORT="3333"
+
+DATABASE_URL="postgresql://docker:docker@localhost:5432/apilibrary?schema=public"
+```
+
+### 5️⃣ Subir o banco de dados com Docker
+
+```bash
+# Isso vai subir um container do PostgreSQL com o banco apilibrary.
+docker compose up -d
+```
+
+### 6️⃣ Rodar as migrations
+
+```bash
+# Isso vai rodar as migrations.
+npx prisma migrate dev
+```
+
+### 7️⃣ Iniciar o servidor
+
+```bash
+# Isso vai iniciar o servidor.
+npm run dev
+```
+
+## 🖥️ O backend ficará disponível em:
+### 👉 http://localhost:3333
