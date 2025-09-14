@@ -146,7 +146,7 @@ Construída com **Node.js + Fastify + TypeScript**, com autenticação JWT e per
 
 Abaixo ficará o diagrama do banco de dados para referência das entidades e relacionamentos:
 
-![Database Diagram](./docs//banco%20de%20dados.png)
+![Database Diagram](/src/docs//banco%20de%20dados.png)
 
 .
 
