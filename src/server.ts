@@ -11,7 +11,7 @@ import { routers } from './http/router';
 const app = fastify()
 
 app.register(fastifyCors,{
-    origin: "http://localhost:5173",
+    origin: env.CONNECTION_ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
