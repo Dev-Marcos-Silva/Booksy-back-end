@@ -7,6 +7,7 @@ import { fastifyCors } from '@fastify/cors'
 import { join } from 'path';
 import { env } from './env/index';
 import { routers } from './http/router';
+import { number } from 'zod';
 
 const app = fastify()
 
@@ -36,6 +37,8 @@ app.register(fastifyStatic, {
 
 app.register(routers)
 
-app.listen({ port: env.PORT}).then(() => {
+const port = process.env.PORT? Number(process.env.PORT): env.PORT
+
+app.listen({ port, host: "0.0.0.0" }).then(() => {
     console.log('Server is ruinning')
 })
