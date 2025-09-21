@@ -2,7 +2,15 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply){
 
-    await request.jwtVerify()
+    const refreshToken = request.cookies.refreshToken;
+
+    if (!refreshToken) {
+        return reply.status(401).send({ error: "No refresh token" });
+    }
+
+    await request.jwtVerify({
+        onlyCookie: true
+    })
 
     const { role } = request.user
 
