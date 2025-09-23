@@ -31,7 +31,7 @@ app.register(fastifyJwt, {
 app.register(multipart)
 
 app.register(fastifyStatic, {
-    root: join(__dirname, '..','upload'),
+    root: join(__dirname, '../upload'),
     prefix: '/upload',
 })
 
