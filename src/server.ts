@@ -4,7 +4,7 @@ import fastifyCookie from '@fastify/cookie';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import { fastifyCors } from '@fastify/cors'
-import { join } from 'path';
+import path, { join } from 'path';
 import { env } from './env/index';
 import { routers } from './http/router';
 import { number } from 'zod';
@@ -31,7 +31,7 @@ app.register(fastifyJwt, {
 app.register(multipart)
 
 app.register(fastifyStatic, {
-    root: join(__dirname, '../../upload'),
+    root: path.resolve(__dirname, '../upload'),
     prefix: '/upload',
 })
 
